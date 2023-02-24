@@ -1,4 +1,4 @@
-import { NumberSet, Interval } from '../src';
+import { NumberSet, Interval, IntervalParseError } from '../src';
 import {
   BottomClosed,
   BottomClosedLower,
@@ -183,8 +183,10 @@ test('fromString', () => {
 
   expect(Interval.fromString(' [ -1 , 1 ] ')).toEqual(Closed);
 
-  expect(() => Interval.fromString('Not an interval')).toThrow();
-  expect(() => Interval.fromString('{0,0}')).toThrow();
-  expect(() => Interval.fromString('[NaN,0]')).toThrow();
-  expect(() => Interval.fromString('[0,NaN]')).toThrow();
+  expect(() => Interval.fromString('Not an interval')).toThrowError(
+    IntervalParseError
+  );
+  expect(() => Interval.fromString('{0,0}')).toThrowError(IntervalParseError);
+  expect(() => Interval.fromString('[NaN,0]')).toThrowError(IntervalParseError);
+  expect(() => Interval.fromString('[0,NaN]')).toThrowError(IntervalParseError);
 });

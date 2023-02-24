@@ -1,25 +1,8 @@
 {
+  "private": true,
   "name": "numberset",
   "version": "0.0.0",
-  "author": "Nick Gärtner",
-  "license": "ISC",
-  "description": "library to work with subsets of the real numbers that can be represented by a finite amount of intervals",
-  "private": true,
-  "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib/*.js",
-    "lib/*.d.ts"
-  ],
-  "scripts": {
-    "build": "tsc --build",
-    "clean": "rimraf lib",
-    "format": "prettier --write .",
-    "lint": "eslint . --ext .ts",
-    "test": "jest --coverage",
-    "pack": "npm pack"
-  },
+  "description": "A small library to work with sets of numbers that can be represented by a finite amount of intervals",
   "keywords": [
     "numberset",
     "number",
@@ -30,6 +13,35 @@
     "real",
     "realset"
   ],
+  "homepage": "https://github.com/NickGaertner/NumberSet",
+  "bugs": "https://github.com/NickGaertner/NumberSet/issues",
+  "license": "ISC",
+  "author": {
+    "name": "Nick Gärtner",
+    "email": "nick.gaertner@pm.me"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/*.js",
+    "lib/*.d.ts",
+    "Documentation.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NickGaertner/NumberSet.git"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf lib",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .ts",
+    "test": "jest --coverage",
+    "docs:html": "typedoc --lugin none src/index.ts",
+    "docs:md": "typedoc --plugin typedoc-plugin-markdown src/index.ts",
+    "pack": "npm pack"
+  },
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.14.1",
@@ -43,6 +55,8 @@
     "rimraf": "^4.1.2",
     "ts-jest": "^29.0.5",
     "tsx": "^3.12.3",
+    "typedoc": "^0.23.25",
+    "typedoc-plugin-markdown": "^3.14.0",
     "typescript": "^4.9.5"
   },
   "prettier": {
@@ -72,9 +86,10 @@
       "tsdoc/syntax": "warn"
     },
     "ignorePatterns": [
-      "node_modules/*",
+      "coverage/*",
       "lib/*",
-      "coverage/*"
+      "node_modules/*",
+      "docs/*"
     ]
   },
   "jest": {

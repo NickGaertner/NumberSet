@@ -88,5 +88,5 @@ typings/
 
 out/
 lib/
-dist/
+docs/
 TODO.md
