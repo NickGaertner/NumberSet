@@ -1,11 +1,11 @@
 import { NumberSet } from '.';
 
 /**
- * A connected set represented by its boundries {@link lowerBound} and {@link upperBound}
+ * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}
  *
  * @remarks
  * Supports the most common set operations and can be constructed from a string.<br>
- * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead of the constructor for conveniance.
+ * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead of the constructor for convenience.
  * Some common intervals are defined as static members like {@link Real} and {@link NonNegative}.
  *
  * @alpha
@@ -19,7 +19,7 @@ export class Interval {
   /**
    *
    * @remarks
-   * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead for conveniance
+   * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead for convenience
    *
    * @param lowerBound - The interval's lower endpoint
    * @param upperBound - The interval's upper endpoint
@@ -279,7 +279,7 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to substract
+   * @param other - Interval to subtract
    * @returns The difference of both intervals, e.g. a new interval containing all elements included in `this` and not in other
    */
   without(other: Interval): NumberSet {
@@ -425,7 +425,7 @@ export class Interval {
   /**
    * [-Infinity, 0)
    */
-  static readonly NegativeWithNeginf = this.BottomClosed(-Infinity, 0);
+  static readonly NegativeWithNegInf = this.BottomClosed(-Infinity, 0);
 }
 
 interface BracketGroup {

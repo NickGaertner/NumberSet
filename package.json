@@ -38,7 +38,7 @@
     "format": "prettier --write .",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
-    "docs:html": "typedoc --lugin none src/index.ts",
+    "docs:html": "typedoc --plugin none src/index.ts",
     "docs:md": "typedoc --plugin typedoc-plugin-markdown src/index.ts",
     "pack": "npm pack"
   },
@@ -89,7 +89,8 @@
       "coverage/*",
       "lib/*",
       "node_modules/*",
-      "docs/*"
+      "docs/*",
+      ".*/**/*"
     ]
   },
   "jest": {

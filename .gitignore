@@ -86,6 +86,7 @@ typings/
 .webpack/
 
 
+.vscode/
 out/
 lib/
 docs/

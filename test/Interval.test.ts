@@ -170,7 +170,7 @@ test('infinity & predefined intervals', () => {
   expect(
     Interval.NonNegativeWithInf.symDiff(Interval.NonPositiveWithNegInf)
   ).toEqual(
-    new NumberSet([Interval.NegativeWithNeginf, Interval.PositiveWithInf])
+    new NumberSet([Interval.NegativeWithNegInf, Interval.PositiveWithInf])
   );
 });
 
