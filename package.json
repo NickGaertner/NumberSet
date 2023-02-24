@@ -1,0 +1,72 @@
+{
+  "name": "numberset",
+  "version": "0.0.0",
+  "author": "Nick Gärtner",
+  "license": "ISC",
+  "description": "library to work with subsets of the real numbers that can be represented by a finite amount of intervals",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf lib",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .ts",
+    "test": "jest --coverage",
+    "pack": "npm pack"
+  },
+  "keywords": [
+    "numberset",
+    "number",
+    "set",
+    "interval",
+    "intervaltree",
+    "math",
+    "real",
+    "realset"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.1",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "globstar": "^1.0.0",
+    "jest": "^29.4.3",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.1.2",
+    "ts-jest": "^29.0.5",
+    "tsx": "^3.12.3",
+    "typescript": "^4.9.5"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "overrides": [],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {},
+    "ignorePatterns": [
+      "node_modules/*",
+      "dist/*",
+      "coverage/*"
+    ]
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
