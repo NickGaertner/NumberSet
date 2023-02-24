@@ -1,5 +1,4 @@
-import { Interval } from '../src/Interval';
-import { NumberSet } from '../src/NumberSet';
+import { Interval, NumberSet } from '../src';
 import {
   BottomClosedLower,
   BottomClosedUpper,

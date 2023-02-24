@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { Interval } from './Interval';
+import { Interval } from '.';
 
 export class NumberSet {
   private intervals: Interval[];

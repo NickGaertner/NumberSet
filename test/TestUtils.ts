@@ -1,7 +1,5 @@
 import { expect } from '@jest/globals';
-import { Interval } from '../src/Interval';
-
-import { NumberSet } from '../src/NumberSet';
+import { Interval, NumberSet } from '../src';
 
 // Empty
 export const EmptyOpenPoint = Interval.Open(0, 0);

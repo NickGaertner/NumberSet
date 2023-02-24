@@ -1,3 +1,4 @@
+import { NumberSet, Interval } from '../src';
 import {
   BottomClosed,
   BottomClosedLower,
@@ -16,8 +17,6 @@ import {
   TopClosedLower,
   TopClosedUpper,
 } from './TestUtils';
-import { NumberSet } from '../src/NumberSet';
-import { Interval } from '../src/Interval';
 
 test('toString', () => {
   expect(Closed.toString()).toEqual('[-1,1]');
@@ -173,4 +172,19 @@ test('infinity & predefined intervals', () => {
   ).toEqual(
     new NumberSet([Interval.NegativeWithNeginf, Interval.PositiveWithInf])
   );
+});
+
+test('fromString', () => {
+  expect(Interval.fromString('[-1,1]')).toEqual(Closed);
+  expect(Interval.fromString('[-1,1)')).toEqual(BottomClosed);
+  expect(Interval.fromString('(-1,1]')).toEqual(TopClosed);
+  expect(Interval.fromString('(-1,1)')).toEqual(Open);
+  expect(Interval.fromString(']-1,1[')).toEqual(Open);
+
+  expect(Interval.fromString(' [ -1 , 1 ] ')).toEqual(Closed);
+
+  expect(() => Interval.fromString('Not an interval')).toThrow();
+  expect(() => Interval.fromString('{0,0}')).toThrow();
+  expect(() => Interval.fromString('[NaN,0]')).toThrow();
+  expect(() => Interval.fromString('[0,NaN]')).toThrow();
 });

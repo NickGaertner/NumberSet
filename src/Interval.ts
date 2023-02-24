@@ -1,15 +1,42 @@
 import { NumberSet } from './NumberSet';
 
-const Bracket = {
-  opening: {
-    inclusive: '[',
-    exclusive: '(',
-  },
-  closing: {
-    inclusive: ']',
-    exclusive: ')',
-  },
-};
+interface BracketGroup {
+  readonly inclusive: readonly string[];
+  readonly exclusive: readonly string[];
+}
+
+const OpeningBracket: BracketGroup = {
+  inclusive: ['['],
+  exclusive: ['(', ']'],
+} as const;
+
+const ClosingBracket: BracketGroup = {
+  inclusive: [']'],
+  exclusive: [')', '['],
+} as const;
+
+const openingBracketGroup = `(?<openingBracket>[
+  ${[...OpeningBracket.inclusive, ...OpeningBracket.exclusive]
+    .map((b) => `\\${b}`)
+    .join(',')}
+])`;
+
+const closingBracketGroup = `(?<closingBracket>[
+  ${[...ClosingBracket.inclusive, ...ClosingBracket.exclusive]
+    .map((b) => `\\${b}`)
+    .join(',')}
+])`;
+
+const lowerBoundGroup = '(?<lowerBound>[^,]*)';
+const upperBoundGroup = '(?<upperBound>[^,]*)';
+
+const intervalRegex = new RegExp(
+  openingBracketGroup +
+    lowerBoundGroup +
+    ',' +
+    upperBoundGroup +
+    closingBracketGroup
+);
 
 export class Interval {
   readonly lowerBound: number;
@@ -31,10 +58,47 @@ export class Interval {
 
   toString(): string {
     const openingBracket =
-      Bracket.opening[this.lowerBoundIncluded ? 'inclusive' : 'exclusive'];
+      OpeningBracket[this.lowerBoundIncluded ? 'inclusive' : 'exclusive'][0];
     const closingBracket =
-      Bracket.closing[this.upperBoundIncluded ? 'inclusive' : 'exclusive'];
+      ClosingBracket[this.upperBoundIncluded ? 'inclusive' : 'exclusive'][0];
     return `${openingBracket}${this.lowerBound},${this.upperBound}${closingBracket}`;
+  }
+
+  static fromString(s: string): Interval {
+    const match = s.trim().match(intervalRegex);
+    if (!match || !match.groups) {
+      throw new Error(
+        `The provided string "${s}" is not of a valid interval format.`
+      );
+    }
+    const { openingBracket, lowerBound, upperBound, closingBracket } =
+      match.groups;
+
+    const lowerBoundParsed = parseFloat(lowerBound);
+    const upperBoundParsed = parseFloat(upperBound);
+
+    if (isNaN(lowerBoundParsed)) {
+      throw new Error(
+        `The provided substring "${lowerBound}" couldn't be parsed to a number.`
+      );
+    }
+    if (isNaN(upperBoundParsed)) {
+      throw new Error(
+        `The provided substring "${upperBound}" couldn't be parsed to a number.`
+      );
+    }
+
+    const getInclusion = (bracket: string, bracketGroup: BracketGroup) =>
+      bracketGroup.inclusive.includes(bracket) ? true : false;
+    const lowerBoundIncluded = getInclusion(openingBracket, OpeningBracket);
+    const upperBoundIncluded = getInclusion(closingBracket, ClosingBracket);
+
+    return new Interval(
+      lowerBoundParsed,
+      upperBoundParsed,
+      lowerBoundIncluded,
+      upperBoundIncluded
+    );
   }
 
   toSet(): NumberSet {
