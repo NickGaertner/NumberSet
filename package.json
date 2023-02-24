@@ -5,6 +5,13 @@
   "license": "ISC",
   "description": "library to work with subsets of the real numbers that can be represented by a finite amount of intervals",
   "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "README.md",
+    "lib"
+  ],
   "scripts": {
     "build": "tsc --build",
     "clean": "rimraf lib",
@@ -29,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "eslint": "^8.34.0",
+    "eslint-plugin-tsdoc": "^0.2.17",
     "globstar": "^1.0.0",
     "jest": "^29.4.3",
     "prettier": "^2.8.4",
@@ -47,6 +55,7 @@
     },
     "extends": [
       "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
       "plugin:@typescript-eslint/recommended"
     ],
     "overrides": [],
@@ -56,12 +65,15 @@
       "sourceType": "module"
     },
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "eslint-plugin-tsdoc"
     ],
-    "rules": {},
+    "rules": {
+      "tsdoc/syntax": "warn"
+    },
     "ignorePatterns": [
       "node_modules/*",
-      "dist/*",
+      "lib/*",
       "coverage/*"
     ]
   },
