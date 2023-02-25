@@ -97,6 +97,13 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageReporters": [
+      "clover",
+      "json",
+      "lcov",
+      "text",
+      "json-summary"
+    ]
   }
 }
