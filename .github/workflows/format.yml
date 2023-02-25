@@ -1,4 +1,4 @@
-name: Build
+name: Format
 
 on:
   push:
@@ -7,12 +7,13 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
       - uses: actions/setup-node@v3.6.0
       - run: npm install
-      - run: npm run test
-      # - uses: jpb06/jest-badges-action@latest
-      - run: npm run lint
+      - run: npm run format
+      - uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Format Workflow
