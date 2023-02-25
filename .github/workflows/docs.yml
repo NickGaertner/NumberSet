@@ -14,5 +14,5 @@ jobs:
       - run: npm run docs:md
       - uses: EndBug/add-and-commit@v9
         with:
-          add: 'docs'
+          add: 'docs --force'
           author_name: Build Documentation Workflow
