@@ -15,7 +15,7 @@ jobs:
       - run: npm install
       - run: npm run test
       # - uses: jpb06/jest-badges-action@latest
-      
+
   style-check:
     runs-on: ubuntu-latest
     steps:
