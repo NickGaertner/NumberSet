@@ -36,6 +36,7 @@
     "build": "tsc --build",
     "clean": "rimraf lib",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
     "docs:html": "typedoc --plugin none src/index.ts",
