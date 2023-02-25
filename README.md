@@ -8,7 +8,7 @@
 
 Description
 
-[Documentation](https://github.com/NickGaertner/NumberSet/docs/README.md)
+[Documentation](https://github.com/NickGaertner/NumberSet/docs/modules.md)
 
 ### Installation
 
