@@ -10,7 +10,7 @@ numberset / [Exports](modules.md)
 
 Description
 
-[Documentation](https://github.com/NickGaertner/NumberSet/docs/modules.md)
+[Documentation](https://github.com/NickGaertner/NumberSet/blob/master/docs/modules.md)
 
 ### Installation
 

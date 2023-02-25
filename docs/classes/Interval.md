@@ -76,7 +76,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:29](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L29)
+[src/Interval.ts:29](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L29)
 
 ## Properties
 
@@ -86,7 +86,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:14](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L14)
+[src/Interval.ts:14](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L14)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:16](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L16)
+[src/Interval.ts:16](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L16)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:15](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L15)
+[src/Interval.ts:15](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L15)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:17](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L17)
+[src/Interval.ts:17](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L17)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:317](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L317)
+[src/Interval.ts:317](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L317)
 
 ___
 
@@ -140,7 +140,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:385](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L385)
+[src/Interval.ts:385](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L385)
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:424](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L424)
+[src/Interval.ts:424](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L424)
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:428](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L428)
+[src/Interval.ts:428](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L428)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:399](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L399)
+[src/Interval.ts:399](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L399)
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:403](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L403)
+[src/Interval.ts:403](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L403)
 
 ___
 
@@ -200,7 +200,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:416](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L416)
+[src/Interval.ts:416](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L416)
 
 ___
 
@@ -212,7 +212,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:420](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L420)
+[src/Interval.ts:420](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L420)
 
 ___
 
@@ -224,7 +224,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:407](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L407)
+[src/Interval.ts:407](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L407)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:411](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L411)
+[src/Interval.ts:411](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L411)
 
 ___
 
@@ -248,7 +248,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:390](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L390)
+[src/Interval.ts:390](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L390)
 
 ___
 
@@ -260,7 +260,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:394](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L394)
+[src/Interval.ts:394](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L394)
 
 ## Methods
 
@@ -282,7 +282,7 @@ True if x is included in this interval
 
 #### Defined in
 
-[src/Interval.ts:156](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L156)
+[src/Interval.ts:156](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L156)
 
 ___
 
@@ -304,7 +304,7 @@ True if the intervals represent the same set
 
 #### Defined in
 
-[src/Interval.ts:141](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L141)
+[src/Interval.ts:141](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L141)
 
 ___
 
@@ -326,7 +326,7 @@ The overlap of both intervals, e.g. a new interval containing all elements inclu
 
 #### Defined in
 
-[src/Interval.ts:238](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L238)
+[src/Interval.ts:238](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L238)
 
 ___
 
@@ -348,7 +348,7 @@ True if the intervals overlap, e.g. their intersection is not the empty set
 
 #### Defined in
 
-[src/Interval.ts:218](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L218)
+[src/Interval.ts:218](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L218)
 
 ___
 
@@ -364,7 +364,7 @@ True if this interval equals an empty set
 
 #### Defined in
 
-[src/Interval.ts:128](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L128)
+[src/Interval.ts:128](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L128)
 
 ___
 
@@ -386,7 +386,7 @@ The symmetric difference of both intervals, e.g. a new interval containing all e
 
 #### Defined in
 
-[src/Interval.ts:309](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L309)
+[src/Interval.ts:309](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L309)
 
 ___
 
@@ -402,7 +402,7 @@ NumberSet equivalent to this interval
 
 #### Defined in
 
-[src/Interval.ts:120](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L120)
+[src/Interval.ts:120](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L120)
 
 ___
 
@@ -426,7 +426,7 @@ This interval's string representation
 
 #### Defined in
 
-[src/Interval.ts:56](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L56)
+[src/Interval.ts:56](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L56)
 
 ___
 
@@ -448,7 +448,7 @@ The union of both intervals, e.g. a new interval containing all elements include
 
 #### Defined in
 
-[src/Interval.ts:169](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L169)
+[src/Interval.ts:169](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L169)
 
 ___
 
@@ -470,7 +470,7 @@ The difference of both intervals, e.g. a new interval containing all elements in
 
 #### Defined in
 
-[src/Interval.ts:285](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L285)
+[src/Interval.ts:285](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L285)
 
 ___
 
@@ -493,7 +493,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:355](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L355)
+[src/Interval.ts:355](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L355)
 
 ___
 
@@ -516,7 +516,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:329](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L329)
+[src/Interval.ts:329](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L329)
 
 ___
 
@@ -539,7 +539,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:342](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L342)
+[src/Interval.ts:342](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L342)
 
 ___
 
@@ -561,7 +561,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:380](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L380)
+[src/Interval.ts:380](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L380)
 
 ___
 
@@ -584,7 +584,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:368](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L368)
+[src/Interval.ts:368](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L368)
 
 ___
 
@@ -624,4 +624,4 @@ Interval corresponding to the string representation
 
 #### Defined in
 
-[src/Interval.ts:80](https://github.com/NickGaertner/NumberSet/blob/e590408/src/Interval.ts#L80)
+[src/Interval.ts:80](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/Interval.ts#L80)

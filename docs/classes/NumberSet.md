@@ -55,7 +55,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:26](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L26)
+[src/NumberSet.ts:26](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L26)
 
 ## Properties
 
@@ -65,7 +65,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:13](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L13)
+[src/NumberSet.ts:13](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L13)
 
 ## Methods
 
@@ -92,7 +92,7 @@ for (const interval of set) {
 
 #### Defined in
 
-[src/NumberSet.ts:100](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L100)
+[src/NumberSet.ts:100](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L100)
 
 ___
 
@@ -114,7 +114,7 @@ True if x is included in this set
 
 #### Defined in
 
-[src/NumberSet.ts:134](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L134)
+[src/NumberSet.ts:134](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L134)
 
 ___
 
@@ -136,7 +136,7 @@ True if both sets represent the same abstract set
 
 #### Defined in
 
-[src/NumberSet.ts:117](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L117)
+[src/NumberSet.ts:117](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L117)
 
 ___
 
@@ -159,7 +159,7 @@ all elements included in `both` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:176](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L176)
+[src/NumberSet.ts:176](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L176)
 
 ___
 
@@ -182,7 +182,7 @@ is not empty
 
 #### Defined in
 
-[src/NumberSet.ts:159](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L159)
+[src/NumberSet.ts:159](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L159)
 
 ___
 
@@ -198,7 +198,7 @@ True if the set is empty
 
 #### Defined in
 
-[src/NumberSet.ts:108](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L108)
+[src/NumberSet.ts:108](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L108)
 
 ___
 
@@ -221,7 +221,7 @@ The symmetric difference of both sets, e.g. a new NumberSet
 
 #### Defined in
 
-[src/NumberSet.ts:205](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L205)
+[src/NumberSet.ts:205](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L205)
 
 ___
 
@@ -249,7 +249,7 @@ This set's string representation
 
 #### Defined in
 
-[src/NumberSet.ts:83](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L83)
+[src/NumberSet.ts:83](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L83)
 
 ___
 
@@ -272,7 +272,7 @@ all elements included in `one` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:149](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L149)
+[src/NumberSet.ts:149](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L149)
 
 ___
 
@@ -295,7 +295,7 @@ The difference of both sets, e.g. a new NumberSet
 
 #### Defined in
 
-[src/NumberSet.ts:189](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L189)
+[src/NumberSet.ts:189](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L189)
 
 ___
 
@@ -315,4 +315,4 @@ readonly [`Interval`](Interval.md)[]
 
 #### Defined in
 
-[src/NumberSet.ts:30](https://github.com/NickGaertner/NumberSet/blob/e590408/src/NumberSet.ts#L30)
+[src/NumberSet.ts:30](https://github.com/NickGaertner/NumberSet/blob/7fee70b/src/NumberSet.ts#L30)
