@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "numberset",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.0",
   "description": "A small library to work with sets of numbers that can be represented by a finite amount of intervals",
   "keywords": [
     "numberset",
@@ -13,7 +13,7 @@
     "real",
     "realset"
   ],
-  "homepage": "https://github.com/NickGaertner/NumberSet",
+  "homepage": "https://github.com/NickGaertner/NumberSet#readme",
   "bugs": "https://github.com/NickGaertner/NumberSet/issues",
   "license": "ISC",
   "author": {
