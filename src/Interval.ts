@@ -150,7 +150,7 @@ export class Interval {
 
   /**
    *
-   * @param x - Number to search
+   * @param x - Number to search for
    * @returns True if x is included in this interval
    */
   contains(x: number) {
