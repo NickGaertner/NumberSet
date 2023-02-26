@@ -99,7 +99,7 @@ export class Interval {
    * @param s - String representation of the {@link Interval}
    * @param numberTransform - See {@link Interval} for more information
    * @returns {@link Interval} corresponding to the string representation
-   * @throws {@link IntervalParseError} if s is malformed
+   * @throws {@link ParseError} if s is malformed
    */
   static fromString(s: string, numberTransform?: NumberTransform): Interval {
     const match = s.trim().match(intervalRegex);

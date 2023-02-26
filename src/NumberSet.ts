@@ -106,7 +106,7 @@ export class NumberSet {
    *
    * @param s - String representation of the {@link NumberSet}
    * @returns {@link NumberSet} corresponding to the string representation
-   * @throws TODO {@link IntervalParseError} if s is malformed
+   * @throws TODO {@link ParseError} if s is malformed
    *
    * @alpha
    */

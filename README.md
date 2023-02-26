@@ -34,3 +34,5 @@ npm install numberset
 // TODO create sets
 
 // TODO perform basic operations
+
+// TODO use number transform
