@@ -8,6 +8,10 @@ A set of numbers represented by the union of disjoint intervals
 
 Supports the most common set operations
 
+- _Note: Most functions use [Interval](Interval.md) functions internally.
+It's advised that all provided [Interval](Interval.md)s use the same
+[NumberTransform](../modules.md#numbertransform)._
+
 ## Table of contents
 
 ### Constructors
@@ -38,7 +42,7 @@ Supports the most common set operations
 
 • **new NumberSet**(`intervals`)
 
-Constructs a new NumberSet from the given intervals.
+Constructs a new [NumberSet](NumberSet.md) from the given intervals.
 
 **`Remarks`**
 
@@ -55,7 +59,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:27](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L27)
+[src/NumberSet.ts:29](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L29)
 
 ## Properties
 
@@ -65,7 +69,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:14](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L14)
+[src/NumberSet.ts:16](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L16)
 
 ## Methods
 
@@ -92,7 +96,7 @@ for (const interval of set) {
 
 #### Defined in
 
-[src/NumberSet.ts:101](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L101)
+[src/NumberSet.ts:103](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L103)
 
 ___
 
@@ -114,7 +118,7 @@ True if x is included in this set
 
 #### Defined in
 
-[src/NumberSet.ts:135](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L135)
+[src/NumberSet.ts:137](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L137)
 
 ___
 
@@ -126,7 +130,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `other` | [`NumberSet`](NumberSet.md) | NumberSet to compare to |
+| `other` | [`NumberSet`](NumberSet.md) | [NumberSet](NumberSet.md) to compare to |
 
 #### Returns
 
@@ -136,7 +140,7 @@ True if both sets represent the same abstract set
 
 #### Defined in
 
-[src/NumberSet.ts:118](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L118)
+[src/NumberSet.ts:120](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L120)
 
 ___
 
@@ -148,18 +152,18 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `other` | [`NumberSet`](NumberSet.md) | NumberSet to intersect with |
+| `other` | [`NumberSet`](NumberSet.md) | [NumberSet](NumberSet.md) to intersect with |
 
 #### Returns
 
 [`NumberSet`](NumberSet.md)
 
-The overlap of both sets, e.g. a new NumberSet containing
+The overlap of both sets, e.g. a new [NumberSet](NumberSet.md) containing
 all elements included in `both` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:177](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L177)
+[src/NumberSet.ts:179](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L179)
 
 ___
 
@@ -171,7 +175,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `other` | [`NumberSet`](NumberSet.md) | NumberSet to check for intersection |
+| `other` | [`NumberSet`](NumberSet.md) | [NumberSet](NumberSet.md) to check for intersection |
 
 #### Returns
 
@@ -182,7 +186,7 @@ is not empty
 
 #### Defined in
 
-[src/NumberSet.ts:160](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L160)
+[src/NumberSet.ts:162](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L162)
 
 ___
 
@@ -198,7 +202,7 @@ True if the set is empty
 
 #### Defined in
 
-[src/NumberSet.ts:109](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L109)
+[src/NumberSet.ts:111](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L111)
 
 ___
 
@@ -216,12 +220,12 @@ ___
 
 [`NumberSet`](NumberSet.md)
 
-The symmetric difference of both sets, e.g. a new NumberSet
+The symmetric difference of both sets, e.g. a new [NumberSet](NumberSet.md)
  containing all elements included in `exactly` one of the sets
 
 #### Defined in
 
-[src/NumberSet.ts:206](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L206)
+[src/NumberSet.ts:215](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L215)
 
 ___
 
@@ -249,7 +253,7 @@ This set's string representation
 
 #### Defined in
 
-[src/NumberSet.ts:84](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L84)
+[src/NumberSet.ts:86](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L86)
 
 ___
 
@@ -261,18 +265,18 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `other` | [`NumberSet`](NumberSet.md) | NumberSet to merge with |
+| `other` | [`NumberSet`](NumberSet.md) | [NumberSet](NumberSet.md) to merge with |
 
 #### Returns
 
 [`NumberSet`](NumberSet.md)
 
-The union of both sets, e.g. a new NumberSet containing
+The union of both sets, e.g. a new [NumberSet](NumberSet.md) containing
 all elements included in `one` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:150](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L150)
+[src/NumberSet.ts:152](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L152)
 
 ___
 
@@ -284,18 +288,18 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `other` | [`NumberSet`](NumberSet.md) | NumberSet to subtract |
+| `other` | [`NumberSet`](NumberSet.md) | [NumberSet](NumberSet.md) to subtract |
 
 #### Returns
 
 [`NumberSet`](NumberSet.md)
 
-The difference of both sets, e.g. a new NumberSet
+The difference of both sets, e.g. a new [NumberSet](NumberSet.md)
  containing all elements included in `this` and not in other
 
 #### Defined in
 
-[src/NumberSet.ts:190](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L190)
+[src/NumberSet.ts:192](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L192)
 
 ___
 
@@ -315,4 +319,4 @@ readonly [`Interval`](Interval.md)[]
 
 #### Defined in
 
-[src/NumberSet.ts:31](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/NumberSet.ts#L31)
+[src/NumberSet.ts:33](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/NumberSet.ts#L33)

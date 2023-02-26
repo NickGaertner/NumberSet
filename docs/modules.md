@@ -54,7 +54,7 @@ that can be represented by a finite amount of intervals.
 
 #### Defined in
 
-[src/Interval.ts:3](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/Interval.ts#L3)
+[src/Interval.ts:3](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L3)
 
 ## Functions
 
@@ -76,7 +76,7 @@ that can be represented by a finite amount of intervals.
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:6](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L6)
+[src/PredefinedIntervals.ts:6](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L6)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:11](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L11)
+[src/PredefinedIntervals.ts:11](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L11)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:59](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L59)
+[src/PredefinedIntervals.ts:59](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L59)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:64](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L64)
+[src/PredefinedIntervals.ts:64](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L64)
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:28](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L28)
+[src/PredefinedIntervals.ts:28](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L28)
 
 ___
 
@@ -186,7 +186,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:33](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L33)
+[src/PredefinedIntervals.ts:33](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L33)
 
 ___
 
@@ -208,7 +208,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:49](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L49)
+[src/PredefinedIntervals.ts:49](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L49)
 
 ___
 
@@ -230,7 +230,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:54](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L54)
+[src/PredefinedIntervals.ts:54](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L54)
 
 ___
 
@@ -252,7 +252,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:38](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L38)
+[src/PredefinedIntervals.ts:38](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L38)
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:43](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L43)
+[src/PredefinedIntervals.ts:43](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L43)
 
 ___
 
@@ -296,7 +296,7 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:17](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L17)
+[src/PredefinedIntervals.ts:17](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L17)
 
 ___
 
@@ -318,4 +318,4 @@ ___
 
 #### Defined in
 
-[src/PredefinedIntervals.ts:22](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/PredefinedIntervals.ts#L22)
+[src/PredefinedIntervals.ts:22](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/PredefinedIntervals.ts#L22)
