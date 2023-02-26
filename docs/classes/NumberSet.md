@@ -34,8 +34,8 @@ It's advised that all provided [Interval](Interval.md)s use the same
 - [toString](NumberSet.md#tostring)
 - [union](NumberSet.md#union)
 - [without](NumberSet.md#without)
+- [\_normalize](NumberSet.md#_normalize)
 - [fromString](NumberSet.md#fromstring)
-- [normalize](NumberSet.md#normalize)
 
 ## Constructors
 
@@ -60,7 +60,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:28](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L28)
+[src/NumberSet.ts:28](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L28)
 
 ## Properties
 
@@ -70,7 +70,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:15](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L15)
+[src/NumberSet.ts:15](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L15)
 
 ## Methods
 
@@ -97,7 +97,7 @@ for (const interval of set) {
 
 #### Defined in
 
-[src/NumberSet.ts:141](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L141)
+[src/NumberSet.ts:143](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L143)
 
 ___
 
@@ -119,7 +119,7 @@ True if x is included in this set
 
 #### Defined in
 
-[src/NumberSet.ts:175](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L175)
+[src/NumberSet.ts:177](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L177)
 
 ___
 
@@ -141,7 +141,7 @@ True if both sets represent the same abstract set
 
 #### Defined in
 
-[src/NumberSet.ts:158](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L158)
+[src/NumberSet.ts:160](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L160)
 
 ___
 
@@ -164,7 +164,7 @@ all elements included in `both` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:217](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L217)
+[src/NumberSet.ts:219](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L219)
 
 ___
 
@@ -187,7 +187,7 @@ is not empty
 
 #### Defined in
 
-[src/NumberSet.ts:200](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L200)
+[src/NumberSet.ts:202](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L202)
 
 ___
 
@@ -203,7 +203,7 @@ True if the set is empty
 
 #### Defined in
 
-[src/NumberSet.ts:149](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L149)
+[src/NumberSet.ts:151](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L151)
 
 ___
 
@@ -226,7 +226,7 @@ The symmetric difference of both sets, e.g. a new [NumberSet](NumberSet.md)
 
 #### Defined in
 
-[src/NumberSet.ts:253](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L253)
+[src/NumberSet.ts:259](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L259)
 
 ___
 
@@ -254,7 +254,7 @@ This set's string representation
 
 #### Defined in
 
-[src/NumberSet.ts:86](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L86)
+[src/NumberSet.ts:86](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L86)
 
 ___
 
@@ -277,7 +277,7 @@ all elements included in `one` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:190](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L190)
+[src/NumberSet.ts:192](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L192)
 
 ___
 
@@ -300,7 +300,27 @@ The difference of both sets, e.g. a new [NumberSet](NumberSet.md)
 
 #### Defined in
 
-[src/NumberSet.ts:230](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L230)
+[src/NumberSet.ts:232](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L232)
+
+___
+
+### \_normalize
+
+▸ `Static` `Private` **_normalize**(`intervals`): readonly [`Interval`](Interval.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `intervals` | readonly [`Interval`](Interval.md)[] |
+
+#### Returns
+
+readonly [`Interval`](Interval.md)[]
+
+#### Defined in
+
+[src/NumberSet.ts:35](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L35)
 
 ___
 
@@ -344,24 +364,4 @@ TODO IntervalParseError if s is malformed
 
 #### Defined in
 
-[src/NumberSet.ts:111](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L111)
-
-___
-
-### normalize
-
-▸ `Static` `Private` **normalize**(`intervals`): readonly [`Interval`](Interval.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `intervals` | readonly [`Interval`](Interval.md)[] |
-
-#### Returns
-
-readonly [`Interval`](Interval.md)[]
-
-#### Defined in
-
-[src/NumberSet.ts:35](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L35)
+[src/NumberSet.ts:113](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/NumberSet.ts#L113)
