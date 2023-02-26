@@ -38,6 +38,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
+    "docs:html": "typedoc --plugin none src/index.ts",
     "docs:md": "typedoc --plugin typedoc-plugin-markdown src/index.ts",
     "pack": "npm pack",
     "prepare": "husky install"

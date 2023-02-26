@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { Interval } from '.';
 
 /**
@@ -56,7 +55,6 @@ export class NumberSet {
         const last = prev[prev.length - 1];
         if (last.intersects(current)) {
           const union = last.union(current).intervals;
-          assert(union.length === 1);
           prev[prev.length - 1] = union[0];
         } else {
           prev.push(current);

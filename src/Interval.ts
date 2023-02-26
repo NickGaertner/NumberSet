@@ -7,20 +7,25 @@ const numberId: NumberTransform = (x) => x;
  *
  * @remarks
  * Supports the most common set operations and can be constructed from a string.<br>
- * Consider using the aliases {@link Interval.Closed}, {@link Interval.BottomClosed},
- * {@link Interval.TopClosed}, {@link Interval.Open} and {@link Interval.Point} instead
- * of the constructor for convenience.
+ * Consider using the aliases described down below instead of the constructor for convenience.
  *
  * Some common intervals are already defined like {@link Real} and {@link NonNegative}.
  *
  * All intervals can be constructed with a {@link NumberTransform} that can be used to
  * - include sanity checks, like `Number.isSafeInteger(x)` (think of them as type constraints)
  * - actually transform the bounds, for example clamping the values to nonnegative numbers
+ *
  * The {@link NumberTransform} is propagated by all functions returning {@link Interval} or {@link NumberSet}
  * using the {@link NumberTransform} from the __called__ {@link Interval}
  *  - _Note: If your {@link NumberTransform} throws then all functions that use it can throw as well!_
  *  - _Note: The {@link NumberTransform} should be idempotent!_
  *
+ * Aliases:
+ * - {@link Interval.Closed}
+ * - {@link Interval.BottomClosed} (={@link Interval.TopOpen})
+ * - {@link Interval.TopClosed} (={@link Interval.BottomOpen})
+ * - {@link Interval.Open}
+ * - {@link Interval.Point}
  */
 export class Interval {
   readonly lowerBound: number;
@@ -340,6 +345,10 @@ export class Interval {
 
   /* Aliases for constructing new intervals*/
 
+  /**
+   *
+   * @internal
+   */
   private static readonly withInclusion =
     (lowerBoundIncluded: boolean, upperBoundIncluded: boolean) =>
     (
@@ -371,10 +380,22 @@ export class Interval {
    */
   static readonly BottomClosed = this.withInclusion(true, false);
   /**
+   * Same as {@link BottomClosed}
+   * See {@link Interval} for more information
+   * @returns [lowerBound,upperBound)
+   */
+  static readonly TopOpen = this.BottomClosed;
+  /**
    * See {@link Interval} for more information
    * @returns (lowerBound,upperBound]
    */
   static readonly TopClosed = this.withInclusion(false, true);
+  /**
+   * Same as {@link TopClosed}
+   * See {@link Interval} for more information
+   * @returns (lowerBound,upperBound]
+   */
+  static readonly BottomOpen = this.TopClosed;
   /**
    * See {@link Interval} for more information
    * @returns [x,x]
