@@ -1,4 +1,4 @@
-import { Inf, Interval, NumberSet } from '../src';
+import { Inf, NumberSet } from '../src';
 import {
   BottomClosedLower,
   BottomClosedUpper,
@@ -49,7 +49,7 @@ test('IsEmpty', () => {
 
 test('equals', () => {
   expect(new NumberSet([])).toEqual(new NumberSet([]));
-  expect(new NumberSet([])).not.toEqual(new NumberSet([Inf]));
+  expect(new NumberSet([])).not.toEqual(new NumberSet([Inf()]));
   expect(new NumberSet([Closed])).toEqual(new NumberSet([Closed]));
   expect(new NumberSet([Closed])).not.toEqual(new NumberSet([Open]));
   expect(new NumberSet([Closed, Open])).toEqual(new NumberSet([Open, Closed]));

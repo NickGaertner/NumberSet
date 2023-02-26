@@ -14,6 +14,7 @@ import {
   NegativeWithNegInf,
   PositiveWithInf,
 } from '../src';
+
 import {
   BottomClosed,
   BottomClosedLower,
@@ -129,45 +130,49 @@ test('symDiff', () => {
 });
 
 test('infinity & predefined intervals', () => {
-  expect(Inf.toString()).toEqual(`[Infinity,Infinity]`);
+  expect(Inf().toString()).toEqual(`[Infinity,Infinity]`);
 
-  expect(Inf.isEmpty()).toBeFalsy();
+  expect(Inf().isEmpty()).toBeFalsy();
   expect(Interval.Closed(Infinity, 0).isEmpty()).toBeTruthy();
 
   expect(Inf).toEqual(Inf);
 
-  expect(Inf.contains(Infinity)).toBeTruthy();
-  expect(Inf.contains(0)).toBeFalsy();
-  expect(Real.contains(0)).toBeTruthy();
-  expect(Real.contains(Infinity)).toBeFalsy();
-  expect(RealWithInf.contains(0)).toBeTruthy();
-  expect(RealWithInf.contains(Infinity)).toBeTruthy();
+  expect(Inf().contains(Infinity)).toBeTruthy();
+  expect(Inf().contains(0)).toBeFalsy();
+  expect(Real().contains(0)).toBeTruthy();
+  expect(Real().contains(Infinity)).toBeFalsy();
+  expect(RealWithInf().contains(0)).toBeTruthy();
+  expect(RealWithInf().contains(Infinity)).toBeTruthy();
 
-  expect(Inf.union(Inf)).toEqual(new NumberSet([Inf]));
-  expect(Inf.union(Closed)).toEqual(new NumberSet([Inf, Closed]));
-  expect(NonNegative.union(NonPositive)).toEqual(new NumberSet([Real]));
-  expect(NonNegativeWithInf.union(NonPositiveWithNegInf)).toEqual(
-    new NumberSet([RealWithInf])
+  expect(Inf().union(Inf())).toEqual(new NumberSet([Inf()]));
+  expect(Inf().union(Closed)).toEqual(new NumberSet([Inf(), Closed]));
+  expect(NonNegative().union(NonPositive())).toEqual(new NumberSet([Real()]));
+  expect(NonNegativeWithInf().union(NonPositiveWithNegInf())).toEqual(
+    new NumberSet([RealWithInf()])
   );
 
-  expect(NonNegative.intersects(NonPositive)).toBeTruthy();
-  expect(NonNegativeWithInf.intersects(NonPositiveWithNegInf)).toBeTruthy();
-  expect(Real.intersects(RealWithInf)).toBeTruthy();
+  expect(NonNegative().intersects(NonPositive())).toBeTruthy();
+  expect(NonNegativeWithInf().intersects(NonPositiveWithNegInf())).toBeTruthy();
+  expect(Real().intersects(RealWithInf())).toBeTruthy();
 
-  expect(NonNegative.intersection(NonPositive)).toEqual(Middle);
-  expect(NonNegativeWithInf.intersection(NonPositiveWithNegInf)).toEqual(
+  expect(NonNegative().intersection(NonPositive())).toEqual(Middle);
+  expect(NonNegativeWithInf().intersection(NonPositiveWithNegInf())).toEqual(
     Middle
   );
-  expect(Real.intersection(RealWithInf)).toEqual(Real);
+  expect(Real().intersection(RealWithInf())).toEqual(Real());
 
-  expect(Real.without(Middle)).toEqual(new NumberSet([Negative, Positive]));
-  expect(NonNegativeWithInf.without(Inf)).toEqual(new NumberSet([NonNegative]));
-
-  expect(NonNegative.symDiff(NonPositive)).toEqual(
-    new NumberSet([Negative, Positive])
+  expect(Real().without(Middle)).toEqual(
+    new NumberSet([Negative(), Positive()])
   );
-  expect(NonNegativeWithInf.symDiff(NonPositiveWithNegInf)).toEqual(
-    new NumberSet([NegativeWithNegInf, PositiveWithInf])
+  expect(NonNegativeWithInf().without(Inf())).toEqual(
+    new NumberSet([NonNegative()])
+  );
+
+  expect(NonNegative().symDiff(NonPositive())).toEqual(
+    new NumberSet([Negative(), Positive()])
+  );
+  expect(NonNegativeWithInf().symDiff(NonPositiveWithNegInf())).toEqual(
+    new NumberSet([NegativeWithNegInf(), PositiveWithInf()])
   );
 });
 

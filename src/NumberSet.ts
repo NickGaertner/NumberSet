@@ -1,3 +1,4 @@
+// TODO get rid of assert
 import assert from 'assert';
 import { Interval } from '.';
 

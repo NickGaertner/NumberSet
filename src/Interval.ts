@@ -1,5 +1,7 @@
 import { Empty, NumberSet } from '.';
 
+export type NumberTransform = (x: number) => number;
+
 /**
  * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}
  *
@@ -18,6 +20,7 @@ export class Interval {
   readonly upperBound: number;
   readonly lowerBoundIncluded: boolean;
   readonly upperBoundIncluded: boolean;
+  readonly numberTransform: NumberTransform;
 
   /**
    *
@@ -34,14 +37,17 @@ export class Interval {
     upperBound,
     lowerBoundIncluded,
     upperBoundIncluded,
+    numberTransform,
   }: {
     lowerBound: number;
     upperBound: number;
     lowerBoundIncluded: boolean;
     upperBoundIncluded: boolean;
+    numberTransform?: NumberTransform;
   }) {
-    this.lowerBound = lowerBound;
-    this.upperBound = upperBound;
+    this.numberTransform = numberTransform ? numberTransform : (x) => x;
+    this.lowerBound = this.numberTransform(lowerBound);
+    this.upperBound = this.numberTransform(upperBound);
     this.lowerBoundIncluded = lowerBoundIncluded;
     this.upperBoundIncluded = upperBoundIncluded;
   }
@@ -80,7 +86,7 @@ export class Interval {
    * @returns Interval corresponding to the string representation
    * @throws {@link IntervalParseError} if s is malformed
    */
-  static fromString(s: string): Interval {
+  static fromString(s: string, numberTransform?: NumberTransform): Interval {
     const match = s.trim().match(intervalRegex);
     if (!match || !match.groups) {
       throw new IntervalParseError(
@@ -113,6 +119,7 @@ export class Interval {
       upperBound,
       lowerBoundIncluded,
       upperBoundIncluded,
+      numberTransform,
     });
   }
 
@@ -141,7 +148,7 @@ export class Interval {
    * @param other - Interval to compare to
    * @returns True if the intervals represent the same set
    */
-  equals(other: Interval) {
+  equals(other: Interval): boolean {
     return (
       (this.lowerBound === other.lowerBound &&
         this.lowerBoundIncluded === other.lowerBoundIncluded &&
@@ -156,7 +163,7 @@ export class Interval {
    * @param x - Number to search for
    * @returns True if x is included in this interval
    */
-  contains(x: number) {
+  contains(x: number): boolean {
     return (
       (this.lowerBound < x && x < this.upperBound) ||
       (this.lowerBoundIncluded && x === this.lowerBound) ||
@@ -209,6 +216,7 @@ export class Interval {
         upperBound,
         lowerBoundIncluded,
         upperBoundIncluded,
+        numberTransform: this.numberTransform,
       }),
     ]);
   }
@@ -240,7 +248,7 @@ export class Interval {
    */
   intersection(other: Interval): Interval {
     if (!this.intersects(other)) {
-      return Empty;
+      return Empty(this.numberTransform);
     }
     const getLowerBound: () => [number, boolean] = () => {
       if (this.lowerBound < other.lowerBound) {
@@ -277,6 +285,7 @@ export class Interval {
       upperBound,
       lowerBoundIncluded,
       upperBoundIncluded,
+      numberTransform: this.numberTransform,
     });
   }
 
@@ -295,12 +304,14 @@ export class Interval {
       upperBound: intersection.lowerBound,
       lowerBoundIncluded: this.lowerBoundIncluded,
       upperBoundIncluded: !intersection.lowerBoundIncluded,
+      numberTransform: this.numberTransform,
     });
     const upper = new Interval({
       lowerBound: intersection.upperBound,
       upperBound: this.upperBound,
       lowerBoundIncluded: !intersection.upperBoundIncluded,
       upperBoundIncluded: this.upperBoundIncluded,
+      numberTransform: this.numberTransform,
     });
     return new NumberSet([lower, upper].filter((i) => !i.isEmpty()));
   }
@@ -313,64 +324,56 @@ export class Interval {
     return this.without(other).union(other.without(this));
   }
 
+  private static readonly withInclusion =
+    (lowerBoundIncluded: boolean, upperBoundIncluded: boolean) =>
+    (
+      lowerBound: number,
+      upperBound: number,
+      numberTransform?: NumberTransform
+    ) =>
+      new Interval({
+        lowerBound,
+        upperBound,
+        lowerBoundIncluded,
+        upperBoundIncluded,
+        numberTransform,
+      });
+
   /**
    *
    * @param lowerBound -
    * @param upperBound -
    * @returns [lowerBound,upperBound]
    */
-  static readonly Closed = (lowerBound: number, upperBound: number) =>
-    new Interval({
-      lowerBound,
-      upperBound,
-      lowerBoundIncluded: true,
-      upperBoundIncluded: true,
-    });
+  static readonly Closed = this.withInclusion(true, true);
   /**
    *
    * @param lowerBound -
    * @param upperBound -
    * @returns (lowerBound,upperBound)
    */
-  static readonly Open = (lowerBound: number, upperBound: number) =>
-    new Interval({
-      lowerBound,
-      upperBound,
-      lowerBoundIncluded: false,
-      upperBoundIncluded: false,
-    });
+  static readonly Open = this.withInclusion(false, false);
   /**
    *
    * @param lowerBound -
    * @param upperBound -
    * @returns [lowerBound,upperBound)
    */
-  static readonly BottomClosed = (lowerBound: number, upperBound: number) =>
-    new Interval({
-      lowerBound,
-      upperBound,
-      lowerBoundIncluded: true,
-      upperBoundIncluded: false,
-    });
+  static readonly BottomClosed = this.withInclusion(true, false);
   /**
    *
    * @param lowerBound -
    * @param upperBound -
    * @returns (lowerBound,upperBound]
    */
-  static readonly TopClosed = (lowerBound: number, upperBound: number) =>
-    new Interval({
-      lowerBound,
-      upperBound,
-      lowerBoundIncluded: false,
-      upperBoundIncluded: true,
-    });
+  static readonly TopClosed = this.withInclusion(false, true);
   /**
    *
    * @param x -
    * @returns [x,x]
    */
-  static readonly Point = (x: number) => this.Closed(x, x);
+  static readonly Point = (x: number, numberTransform?: NumberTransform) =>
+    this.Closed(x, x, numberTransform);
 }
 
 interface BracketGroup {
