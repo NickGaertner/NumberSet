@@ -245,15 +245,16 @@ export class Interval {
     if (this.isEmpty() || other.isEmpty()) {
       return false;
     }
-    if (
-      this.contains(other.lowerBound) ||
-      this.contains(other.upperBound) ||
-      other.contains(this.lowerBound) ||
-      other.contains(this.upperBound)
-    ) {
-      return true;
-    }
-    return false;
+
+    const cond0 =
+      this.lowerBoundIncluded && other.upperBoundIncluded
+        ? this.lowerBound <= other.upperBound
+        : this.lowerBound < other.upperBound;
+    const cond1 =
+      other.lowerBoundIncluded && this.upperBoundIncluded
+        ? other.lowerBound <= this.upperBound
+        : other.lowerBound < this.upperBound;
+    return cond0 && cond1;
   }
 
   /**
@@ -349,7 +350,7 @@ export class Interval {
    *
    * @internal
    */
-  private static readonly withInclusion =
+  private static readonly _withInclusion =
     (lowerBoundIncluded: boolean, upperBoundIncluded: boolean) =>
     (
       lowerBound: number,
@@ -368,17 +369,17 @@ export class Interval {
    * See {@link Interval} for more information
    * @returns [lowerBound,upperBound]
    */
-  static readonly Closed = this.withInclusion(true, true);
+  static readonly Closed = this._withInclusion(true, true);
   /**
    * See {@link Interval} for more information
    * @returns (lowerBound,upperBound)
    */
-  static readonly Open = this.withInclusion(false, false);
+  static readonly Open = this._withInclusion(false, false);
   /**
    * See {@link Interval} for more information
    * @returns [lowerBound,upperBound)
    */
-  static readonly BottomClosed = this.withInclusion(true, false);
+  static readonly BottomClosed = this._withInclusion(true, false);
   /**
    * Same as {@link BottomClosed}
    * See {@link Interval} for more information
@@ -389,7 +390,7 @@ export class Interval {
    * See {@link Interval} for more information
    * @returns (lowerBound,upperBound]
    */
-  static readonly TopClosed = this.withInclusion(false, true);
+  static readonly TopClosed = this._withInclusion(false, true);
   /**
    * Same as {@link TopClosed}
    * See {@link Interval} for more information

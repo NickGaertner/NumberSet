@@ -21,8 +21,11 @@
     "email": "nick.gaertner@pm.me"
   },
   "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "types": "./lib/index.d.ts",
   "files": [
     "lib/*.js",
     "lib/*.d.ts"

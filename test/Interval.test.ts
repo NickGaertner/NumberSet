@@ -94,6 +94,8 @@ test('union', () => {
 });
 
 test('intersects', () => {
+  expect(Closed.intersects(Closed)).toBeTruthy();
+  expect(Open.intersects(Open)).toBeTruthy();
   expect(ClosedLower.intersects(ClosedUpper)).toBeTruthy();
   expect(ClosedUpper.intersects(ClosedLower)).toBeTruthy();
   expect(TopClosedLower.intersects(BottomClosedUpper)).toBeTruthy();

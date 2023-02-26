@@ -1,4 +1,4 @@
-import { Empty, Inf, NumberSet, ParseError } from '../src';
+import { Inf, Interval, NumberSet, ParseError } from '../src';
 import {
   BottomClosedLower,
   BottomClosedUpper,
@@ -145,6 +145,16 @@ test('without', () => {
   expect(
     new NumberSet([Closed]).without(new NumberSet([Middle, Outlier]))
   ).toEqual(new NumberSet([BottomClosedLower, TopClosedUpper]));
+  expect(
+    new NumberSet([0, 1, 2].map((n) => Interval.Open(n, n + 1))).without(
+      new NumberSet([0, 1, 2, 3].map((n) => Interval.Open(n - 0.5, n + 0.5)))
+    )
+  ).toEqual(new NumberSet([0.5, 1.5, 2.5].map((n) => Interval.Point(n))));
+  expect(
+    new NumberSet([0, 1, 2, 3].map((n) => Interval.Open(n, n + 1))).without(
+      new NumberSet([0, 1, 2, 3, 4].map((n) => Interval.Open(n - 0.5, n + 0.5)))
+    )
+  ).toEqual(new NumberSet([0.5, 1.5, 2.5, 3.5].map((n) => Interval.Point(n))));
 });
 
 test('symDiff', () => {

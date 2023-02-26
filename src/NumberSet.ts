@@ -26,13 +26,13 @@ export class NumberSet {
    * @param intervals - Intervals representing this set
    */
   constructor(intervals: ReadonlyArray<Interval>) {
-    this.intervals = NumberSet.normalize(intervals);
+    this.intervals = NumberSet._normalize(intervals);
   }
 
   /**
    * @internal
    */
-  private static normalize(
+  private static _normalize(
     intervals: ReadonlyArray<Interval>
   ): ReadonlyArray<Interval> {
     let modifiedIntervals = intervals.filter((i) => !i.isEmpty());
@@ -107,6 +107,8 @@ export class NumberSet {
    * @param s - String representation of the {@link NumberSet}
    * @returns {@link NumberSet} corresponding to the string representation
    * @throws TODO {@link IntervalParseError} if s is malformed
+   *
+   * @alpha
    */
   static fromString(s: string): NumberSet {
     const trimmed = s.trim();
@@ -231,16 +233,20 @@ export class NumberSet {
     if (other.isEmpty()) {
       return this;
     }
+
     /* 
     We intentionally write the term without function calls on other
-    to avoid mixing number transforms
+    to avoid mixing the interval's number transforms
     */
     const difference = this.intervals.flatMap(
-      (minuend) =>
-        other.intervals
-          .map((subtrahend) => minuend.without(subtrahend))
-          .reduce((prev, current) => prev.intersection(current)).intervals
+      (
+        minuend // =: M
+      ) =>
+        other.intervals // intervals to subtract =: S1,...,Sn
+          .map((subtrahend) => minuend.without(subtrahend)) // -> M\S1,...,M\Sn
+          .reduce((prev, current) => prev.intersection(current)).intervals // -> M\S1 ∩...∩ M\Sn
     );
+
     return new NumberSet(difference);
   }
 
