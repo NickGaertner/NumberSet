@@ -7,19 +7,25 @@ A connected set represented by its endpoints [lowerBound](Interval.md#lowerbound
 **`Remarks`**
 
 Supports the most common set operations and can be constructed from a string.<br>
-Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval.md#bottomclosed),
-[TopClosed](Interval.md#topclosed), [Open](Interval.md#open) and [Point](Interval.md#point) instead
-of the constructor for convenience.
+Consider using the aliases described down below instead of the constructor for convenience.
 
 Some common intervals are already defined like [Real](../modules.md#real) and [NonNegative](../modules.md#nonnegative).
 
 All intervals can be constructed with a [NumberTransform](../modules.md#numbertransform) that can be used to
 - include sanity checks, like `Number.isSafeInteger(x)` (think of them as type constraints)
 - actually transform the bounds, for example clamping the values to nonnegative numbers
+
 The [NumberTransform](../modules.md#numbertransform) is propagated by all functions returning [Interval](Interval.md) or [NumberSet](NumberSet.md)
 using the [NumberTransform](../modules.md#numbertransform) from the __called__ [Interval](Interval.md)
  - _Note: If your [NumberTransform](../modules.md#numbertransform) throws then all functions that use it can throw as well!_
  - _Note: The [NumberTransform](../modules.md#numbertransform) should be idempotent!_
+
+Aliases:
+- [Closed](Interval.md#closed)
+- [BottomClosed](Interval.md#bottomclosed) (=[TopOpen](Interval.md#topopen))
+- [TopClosed](Interval.md#topclosed) (=[BottomOpen](Interval.md#bottomopen))
+- [Open](Interval.md#open)
+- [Point](Interval.md#point)
 
 ## Table of contents
 
@@ -35,9 +41,11 @@ using the [NumberTransform](../modules.md#numbertransform) from the __called__ [
 - [upperBound](Interval.md#upperbound)
 - [upperBoundIncluded](Interval.md#upperboundincluded)
 - [BottomClosed](Interval.md#bottomclosed)
+- [BottomOpen](Interval.md#bottomopen)
 - [Closed](Interval.md#closed)
 - [Open](Interval.md#open)
 - [TopClosed](Interval.md#topclosed)
+- [TopOpen](Interval.md#topopen)
 
 ### Methods
 
@@ -78,7 +86,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:44](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L44)
+[src/Interval.ts:49](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L49)
 
 ## Properties
 
@@ -88,7 +96,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:26](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L26)
+[src/Interval.ts:31](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L31)
 
 ___
 
@@ -98,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:28](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L28)
+[src/Interval.ts:33](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L33)
 
 ___
 
@@ -108,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:30](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L30)
+[src/Interval.ts:35](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L35)
 
 ___
 
@@ -118,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:27](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L27)
+[src/Interval.ts:32](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L32)
 
 ___
 
@@ -128,7 +136,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:29](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L29)
+[src/Interval.ts:34](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L34)
 
 ___
 
@@ -158,7 +166,38 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:372](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L372)
+[src/Interval.ts:381](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L381)
+
+___
+
+### BottomOpen
+
+▪ `Static` `Readonly` **BottomOpen**: (`lowerBound`: `number`, `upperBound`: `number`, `numberTransform?`: [`NumberTransform`](../modules.md#numbertransform)) => [`Interval`](Interval.md)
+
+#### Type declaration
+
+▸ (`lowerBound`, `upperBound`, `numberTransform?`): [`Interval`](Interval.md)
+
+Same as [TopClosed](Interval.md#topclosed)
+See [Interval](Interval.md) for more information
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `lowerBound` | `number` |
+| `upperBound` | `number` |
+| `numberTransform?` | [`NumberTransform`](../modules.md#numbertransform) |
+
+##### Returns
+
+[`Interval`](Interval.md)
+
+(lowerBound,upperBound]
+
+#### Defined in
+
+[src/Interval.ts:398](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L398)
 
 ___
 
@@ -188,7 +227,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:362](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L362)
+[src/Interval.ts:371](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L371)
 
 ___
 
@@ -218,7 +257,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:367](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L367)
+[src/Interval.ts:376](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L376)
 
 ___
 
@@ -248,7 +287,38 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:377](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L377)
+[src/Interval.ts:392](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L392)
+
+___
+
+### TopOpen
+
+▪ `Static` `Readonly` **TopOpen**: (`lowerBound`: `number`, `upperBound`: `number`, `numberTransform?`: [`NumberTransform`](../modules.md#numbertransform)) => [`Interval`](Interval.md)
+
+#### Type declaration
+
+▸ (`lowerBound`, `upperBound`, `numberTransform?`): [`Interval`](Interval.md)
+
+Same as [BottomClosed](Interval.md#bottomclosed)
+See [Interval](Interval.md) for more information
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `lowerBound` | `number` |
+| `upperBound` | `number` |
+| `numberTransform?` | [`NumberTransform`](../modules.md#numbertransform) |
+
+##### Returns
+
+[`Interval`](Interval.md)
+
+[lowerBound,upperBound)
+
+#### Defined in
+
+[src/Interval.ts:387](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L387)
 
 ## Methods
 
@@ -270,7 +340,7 @@ True if x is included in this [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:176](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L176)
+[src/Interval.ts:181](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L181)
 
 ___
 
@@ -292,7 +362,7 @@ True if the [Interval](Interval.md)s represent the same set
 
 #### Defined in
 
-[src/Interval.ts:161](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L161)
+[src/Interval.ts:166](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L166)
 
 ___
 
@@ -314,7 +384,7 @@ The overlap of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:259](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L259)
+[src/Interval.ts:264](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L264)
 
 ___
 
@@ -336,7 +406,7 @@ True if the [Interval](Interval.md)s overlap, e.g. their intersection is not the
 
 #### Defined in
 
-[src/Interval.ts:239](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L239)
+[src/Interval.ts:244](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L244)
 
 ___
 
@@ -352,7 +422,7 @@ True if this [Interval](Interval.md) equals an empty set
 
 #### Defined in
 
-[src/Interval.ts:148](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L148)
+[src/Interval.ts:153](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L153)
 
 ___
 
@@ -374,7 +444,7 @@ The symmetric difference of both [Interval](Interval.md)s, e.g. a new [Interval]
 
 #### Defined in
 
-[src/Interval.ts:333](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L333)
+[src/Interval.ts:338](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L338)
 
 ___
 
@@ -390,7 +460,7 @@ NumberSet equivalent to this [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:140](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L140)
+[src/Interval.ts:145](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L145)
 
 ___
 
@@ -414,7 +484,7 @@ This interval's string representation
 
 #### Defined in
 
-[src/Interval.ts:74](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L74)
+[src/Interval.ts:79](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L79)
 
 ___
 
@@ -436,7 +506,7 @@ The union of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.md) c
 
 #### Defined in
 
-[src/Interval.ts:189](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L189)
+[src/Interval.ts:194](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L194)
 
 ___
 
@@ -458,7 +528,7 @@ The difference of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.
 
 #### Defined in
 
-[src/Interval.ts:307](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L307)
+[src/Interval.ts:312](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L312)
 
 ___
 
@@ -483,7 +553,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:382](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L382)
+[src/Interval.ts:403](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L403)
 
 ___
 
@@ -524,7 +594,7 @@ Interval.fromString("[0,1[").equals(Interval.fromString("[0,1)")) // true
 
 #### Defined in
 
-[src/Interval.ts:99](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L99)
+[src/Interval.ts:104](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L104)
 
 ___
 
@@ -559,4 +629,4 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:344](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L344)
+[src/Interval.ts:353](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L353)
