@@ -46,7 +46,7 @@ Error.constructor
 
 #### Defined in
 
-[src/Interval.ts:421](https://github.com/NickGaertner/NumberSet/blob/9a647bb/src/Interval.ts#L421)
+[src/Interval.ts:390](https://github.com/NickGaertner/NumberSet/blob/17b6f0d/src/Interval.ts#L390)
 
 ## Properties
 
