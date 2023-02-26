@@ -34,6 +34,7 @@ It's advised that all provided [Interval](Interval.md)s use the same
 - [toString](NumberSet.md#tostring)
 - [union](NumberSet.md#union)
 - [without](NumberSet.md#without)
+- [fromString](NumberSet.md#fromstring)
 - [normalize](NumberSet.md#normalize)
 
 ## Constructors
@@ -59,7 +60,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:28](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L28)
+[src/NumberSet.ts:28](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L28)
 
 ## Properties
 
@@ -69,7 +70,7 @@ Note that the intervals are stored internally in a "normalized" fashion meaning
 
 #### Defined in
 
-[src/NumberSet.ts:15](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L15)
+[src/NumberSet.ts:15](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L15)
 
 ## Methods
 
@@ -96,7 +97,7 @@ for (const interval of set) {
 
 #### Defined in
 
-[src/NumberSet.ts:101](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L101)
+[src/NumberSet.ts:141](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L141)
 
 ___
 
@@ -118,7 +119,7 @@ True if x is included in this set
 
 #### Defined in
 
-[src/NumberSet.ts:135](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L135)
+[src/NumberSet.ts:175](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L175)
 
 ___
 
@@ -140,7 +141,7 @@ True if both sets represent the same abstract set
 
 #### Defined in
 
-[src/NumberSet.ts:118](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L118)
+[src/NumberSet.ts:158](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L158)
 
 ___
 
@@ -163,7 +164,7 @@ all elements included in `both` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:177](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L177)
+[src/NumberSet.ts:217](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L217)
 
 ___
 
@@ -186,7 +187,7 @@ is not empty
 
 #### Defined in
 
-[src/NumberSet.ts:160](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L160)
+[src/NumberSet.ts:200](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L200)
 
 ___
 
@@ -202,7 +203,7 @@ True if the set is empty
 
 #### Defined in
 
-[src/NumberSet.ts:109](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L109)
+[src/NumberSet.ts:149](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L149)
 
 ___
 
@@ -225,7 +226,7 @@ The symmetric difference of both sets, e.g. a new [NumberSet](NumberSet.md)
 
 #### Defined in
 
-[src/NumberSet.ts:213](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L213)
+[src/NumberSet.ts:253](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L253)
 
 ___
 
@@ -253,7 +254,7 @@ This set's string representation
 
 #### Defined in
 
-[src/NumberSet.ts:84](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L84)
+[src/NumberSet.ts:86](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L86)
 
 ___
 
@@ -276,7 +277,7 @@ all elements included in `one` of the source sets
 
 #### Defined in
 
-[src/NumberSet.ts:150](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L150)
+[src/NumberSet.ts:190](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L190)
 
 ___
 
@@ -299,7 +300,51 @@ The difference of both sets, e.g. a new [NumberSet](NumberSet.md)
 
 #### Defined in
 
-[src/NumberSet.ts:190](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L190)
+[src/NumberSet.ts:230](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L230)
+
+___
+
+### fromString
+
+▸ `Static` **fromString**(`s`): [`NumberSet`](NumberSet.md)
+
+Constructs a [NumberSet](NumberSet.md) from a string representation
+
+**`Remarks`**
+
+Expects a list of [Interval](Interval.md) string representations separated by ", "
+surrounded by curly braces. See [fromString](Interval.md#fromstring) for more information on
+formatting intervals.
+
+Prefer constructing directly from [Interval](Interval.md)s instead of strings if possible
+
+**`Example`**
+
+``` ts
+NumberSet.fromString("{(-1,0), (0,1)}").equals(new NumberSet([
+ Interval.Open(-1,0), Interval.Open(0,1)
+])); // true
+```
+
+**`Throws`**
+
+TODO IntervalParseError if s is malformed
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `s` | `string` | String representation of the [NumberSet](NumberSet.md) |
+
+#### Returns
+
+[`NumberSet`](NumberSet.md)
+
+[NumberSet](NumberSet.md) corresponding to the string representation
+
+#### Defined in
+
+[src/NumberSet.ts:111](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L111)
 
 ___
 
@@ -319,4 +364,4 @@ readonly [`Interval`](Interval.md)[]
 
 #### Defined in
 
-[src/NumberSet.ts:32](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/NumberSet.ts#L32)
+[src/NumberSet.ts:35](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/NumberSet.ts#L35)
