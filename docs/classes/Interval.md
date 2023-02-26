@@ -60,8 +60,8 @@ Aliases:
 - [union](Interval.md#union)
 - [without](Interval.md#without)
 - [Point](Interval.md#point)
+- [\_withInclusion](Interval.md#_withinclusion)
 - [fromString](Interval.md#fromstring)
-- [withInclusion](Interval.md#withinclusion)
 
 ## Constructors
 
@@ -86,7 +86,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:49](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L49)
+[src/Interval.ts:49](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L49)
 
 ## Properties
 
@@ -96,7 +96,7 @@ Consider using the aliases [Closed](Interval.md#closed), [BottomClosed](Interval
 
 #### Defined in
 
-[src/Interval.ts:31](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L31)
+[src/Interval.ts:31](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L31)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:33](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L33)
+[src/Interval.ts:33](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L33)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:35](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L35)
+[src/Interval.ts:35](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L35)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:32](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L32)
+[src/Interval.ts:32](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L32)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[src/Interval.ts:34](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L34)
+[src/Interval.ts:34](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L34)
 
 ___
 
@@ -166,7 +166,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:381](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L381)
+[src/Interval.ts:382](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L382)
 
 ___
 
@@ -197,7 +197,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:398](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L398)
+[src/Interval.ts:399](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L399)
 
 ___
 
@@ -227,7 +227,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:371](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L371)
+[src/Interval.ts:372](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L372)
 
 ___
 
@@ -257,7 +257,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:376](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L376)
+[src/Interval.ts:377](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L377)
 
 ___
 
@@ -287,7 +287,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:392](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L392)
+[src/Interval.ts:393](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L393)
 
 ___
 
@@ -318,7 +318,7 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:387](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L387)
+[src/Interval.ts:388](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L388)
 
 ## Methods
 
@@ -340,7 +340,7 @@ True if x is included in this [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:181](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L181)
+[src/Interval.ts:181](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L181)
 
 ___
 
@@ -362,7 +362,7 @@ True if the [Interval](Interval.md)s represent the same set
 
 #### Defined in
 
-[src/Interval.ts:166](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L166)
+[src/Interval.ts:166](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L166)
 
 ___
 
@@ -384,7 +384,7 @@ The overlap of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:264](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L264)
+[src/Interval.ts:265](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L265)
 
 ___
 
@@ -406,7 +406,7 @@ True if the [Interval](Interval.md)s overlap, e.g. their intersection is not the
 
 #### Defined in
 
-[src/Interval.ts:244](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L244)
+[src/Interval.ts:244](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L244)
 
 ___
 
@@ -422,7 +422,7 @@ True if this [Interval](Interval.md) equals an empty set
 
 #### Defined in
 
-[src/Interval.ts:153](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L153)
+[src/Interval.ts:153](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L153)
 
 ___
 
@@ -444,7 +444,7 @@ The symmetric difference of both [Interval](Interval.md)s, e.g. a new [Interval]
 
 #### Defined in
 
-[src/Interval.ts:338](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L338)
+[src/Interval.ts:339](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L339)
 
 ___
 
@@ -460,7 +460,7 @@ NumberSet equivalent to this [Interval](Interval.md)
 
 #### Defined in
 
-[src/Interval.ts:145](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L145)
+[src/Interval.ts:145](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L145)
 
 ___
 
@@ -484,7 +484,7 @@ This interval's string representation
 
 #### Defined in
 
-[src/Interval.ts:79](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L79)
+[src/Interval.ts:79](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L79)
 
 ___
 
@@ -506,7 +506,7 @@ The union of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.md) c
 
 #### Defined in
 
-[src/Interval.ts:194](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L194)
+[src/Interval.ts:194](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L194)
 
 ___
 
@@ -528,7 +528,7 @@ The difference of both [Interval](Interval.md)s, e.g. a new [Interval](Interval.
 
 #### Defined in
 
-[src/Interval.ts:312](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L312)
+[src/Interval.ts:313](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L313)
 
 ___
 
@@ -553,7 +553,42 @@ See [Interval](Interval.md) for more information
 
 #### Defined in
 
-[src/Interval.ts:403](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L403)
+[src/Interval.ts:404](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L404)
+
+___
+
+### \_withInclusion
+
+▸ `Static` `Private` `Readonly` **_withInclusion**(`lowerBoundIncluded`, `upperBoundIncluded`): (`lowerBound`: `number`, `upperBound`: `number`, `numberTransform?`: [`NumberTransform`](../modules.md#numbertransform)) => [`Interval`](Interval.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `lowerBoundIncluded` | `boolean` |
+| `upperBoundIncluded` | `boolean` |
+
+#### Returns
+
+`fn`
+
+▸ (`lowerBound`, `upperBound`, `numberTransform?`): [`Interval`](Interval.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `lowerBound` | `number` |
+| `upperBound` | `number` |
+| `numberTransform?` | [`NumberTransform`](../modules.md#numbertransform) |
+
+##### Returns
+
+[`Interval`](Interval.md)
+
+#### Defined in
+
+[src/Interval.ts:354](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L354)
 
 ___
 
@@ -594,39 +629,4 @@ IntervalParseError if s is malformed
 
 #### Defined in
 
-[src/Interval.ts:104](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L104)
-
-___
-
-### withInclusion
-
-▸ `Static` `Private` `Readonly` **withInclusion**(`lowerBoundIncluded`, `upperBoundIncluded`): (`lowerBound`: `number`, `upperBound`: `number`, `numberTransform?`: [`NumberTransform`](../modules.md#numbertransform)) => [`Interval`](Interval.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `lowerBoundIncluded` | `boolean` |
-| `upperBoundIncluded` | `boolean` |
-
-#### Returns
-
-`fn`
-
-▸ (`lowerBound`, `upperBound`, `numberTransform?`): [`Interval`](Interval.md)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `lowerBound` | `number` |
-| `upperBound` | `number` |
-| `numberTransform?` | [`NumberTransform`](../modules.md#numbertransform) |
-
-##### Returns
-
-[`Interval`](Interval.md)
-
-#### Defined in
-
-[src/Interval.ts:353](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L353)
+[src/Interval.ts:104](https://github.com/NickGaertner/NumberSet/blob/8043dcf/src/Interval.ts#L104)
