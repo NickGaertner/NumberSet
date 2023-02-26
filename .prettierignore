@@ -1,6 +1,0 @@
-.git/
-.vscode/
-coverage/
-lib/
-docs/
-package-lock.json
