@@ -2,7 +2,7 @@
   "private": true,
   "name": "numberset",
   "version": "0.0.0-alpha.0",
-  "description": "A small library to work with sets of numbers that can be represented by a finite amount of intervals",
+  "description": "Small library to perform set operations on number sets",
   "keywords": [
     "numberset",
     "number",
@@ -25,8 +25,7 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib/*.js",
-    "lib/*.d.ts",
-    "Documentation.md"
+    "lib/*.d.ts"
   ],
   "repository": {
     "type": "git",

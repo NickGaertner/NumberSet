@@ -5,4 +5,5 @@
  * @packageDocumentation
  */
 export * from './Interval';
+export * from './PredefinedIntervals';
 export * from './NumberSet';

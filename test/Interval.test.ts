@@ -1,4 +1,19 @@
-import { NumberSet, Interval, IntervalParseError } from '../src';
+import {
+  NumberSet,
+  Interval,
+  IntervalParseError,
+  Inf,
+  Real,
+  RealWithInf,
+  NonNegative,
+  NonNegativeWithInf,
+  NonPositiveWithNegInf,
+  NonPositive,
+  Positive,
+  Negative,
+  NegativeWithNegInf,
+  PositiveWithInf,
+} from '../src';
 import {
   BottomClosed,
   BottomClosedLower,
@@ -114,63 +129,45 @@ test('symDiff', () => {
 });
 
 test('infinity & predefined intervals', () => {
-  expect(Interval.Inf.toString()).toEqual(`[Infinity,Infinity]`);
+  expect(Inf.toString()).toEqual(`[Infinity,Infinity]`);
 
-  expect(Interval.Inf.isEmpty()).toBeFalsy();
+  expect(Inf.isEmpty()).toBeFalsy();
   expect(Interval.Closed(Infinity, 0).isEmpty()).toBeTruthy();
 
-  expect(Interval.Inf).toEqual(Interval.Inf);
+  expect(Inf).toEqual(Inf);
 
-  expect(Interval.Inf.contains(Infinity)).toBeTruthy();
-  expect(Interval.Inf.contains(0)).toBeFalsy();
-  expect(Interval.Real.contains(0)).toBeTruthy();
-  expect(Interval.Real.contains(Infinity)).toBeFalsy();
-  expect(Interval.RealWithInf.contains(0)).toBeTruthy();
-  expect(Interval.RealWithInf.contains(Infinity)).toBeTruthy();
+  expect(Inf.contains(Infinity)).toBeTruthy();
+  expect(Inf.contains(0)).toBeFalsy();
+  expect(Real.contains(0)).toBeTruthy();
+  expect(Real.contains(Infinity)).toBeFalsy();
+  expect(RealWithInf.contains(0)).toBeTruthy();
+  expect(RealWithInf.contains(Infinity)).toBeTruthy();
 
-  expect(Interval.Inf.union(Interval.Inf)).toEqual(
-    new NumberSet([Interval.Inf])
+  expect(Inf.union(Inf)).toEqual(new NumberSet([Inf]));
+  expect(Inf.union(Closed)).toEqual(new NumberSet([Inf, Closed]));
+  expect(NonNegative.union(NonPositive)).toEqual(new NumberSet([Real]));
+  expect(NonNegativeWithInf.union(NonPositiveWithNegInf)).toEqual(
+    new NumberSet([RealWithInf])
   );
-  expect(Interval.Inf.union(Closed)).toEqual(
-    new NumberSet([Interval.Inf, Closed])
-  );
-  expect(Interval.NonNegative.union(Interval.NonPositive)).toEqual(
-    new NumberSet([Interval.Real])
-  );
-  expect(
-    Interval.NonNegativeWithInf.union(Interval.NonPositiveWithNegInf)
-  ).toEqual(new NumberSet([Interval.RealWithInf]));
 
-  expect(Interval.NonNegative.intersects(Interval.NonPositive)).toBeTruthy();
-  expect(
-    Interval.NonNegativeWithInf.intersects(Interval.NonPositiveWithNegInf)
-  ).toBeTruthy();
-  expect(Interval.Real.intersects(Interval.RealWithInf)).toBeTruthy();
+  expect(NonNegative.intersects(NonPositive)).toBeTruthy();
+  expect(NonNegativeWithInf.intersects(NonPositiveWithNegInf)).toBeTruthy();
+  expect(Real.intersects(RealWithInf)).toBeTruthy();
 
-  expect(Interval.NonNegative.intersection(Interval.NonPositive)).toEqual(
+  expect(NonNegative.intersection(NonPositive)).toEqual(Middle);
+  expect(NonNegativeWithInf.intersection(NonPositiveWithNegInf)).toEqual(
     Middle
   );
-  expect(
-    Interval.NonNegativeWithInf.intersection(Interval.NonPositiveWithNegInf)
-  ).toEqual(Middle);
-  expect(Interval.Real.intersection(Interval.RealWithInf)).toEqual(
-    Interval.Real
-  );
+  expect(Real.intersection(RealWithInf)).toEqual(Real);
 
-  expect(Interval.Real.without(Middle)).toEqual(
-    new NumberSet([Interval.Negative, Interval.Positive])
-  );
-  expect(Interval.NonNegativeWithInf.without(Interval.Inf)).toEqual(
-    new NumberSet([Interval.NonNegative])
-  );
+  expect(Real.without(Middle)).toEqual(new NumberSet([Negative, Positive]));
+  expect(NonNegativeWithInf.without(Inf)).toEqual(new NumberSet([NonNegative]));
 
-  expect(Interval.NonNegative.symDiff(Interval.NonPositive)).toEqual(
-    new NumberSet([Interval.Negative, Interval.Positive])
+  expect(NonNegative.symDiff(NonPositive)).toEqual(
+    new NumberSet([Negative, Positive])
   );
-  expect(
-    Interval.NonNegativeWithInf.symDiff(Interval.NonPositiveWithNegInf)
-  ).toEqual(
-    new NumberSet([Interval.NegativeWithNegInf, Interval.PositiveWithInf])
+  expect(NonNegativeWithInf.symDiff(NonPositiveWithNegInf)).toEqual(
+    new NumberSet([NegativeWithNegInf, PositiveWithInf])
   );
 });
 

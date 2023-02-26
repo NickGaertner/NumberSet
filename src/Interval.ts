@@ -1,12 +1,15 @@
-import { NumberSet } from '.';
+import { Empty, NumberSet } from '.';
 
 /**
  * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}
  *
  * @remarks
  * Supports the most common set operations and can be constructed from a string.<br>
- * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead of the constructor for convenience.
- * Some common intervals are defined as static members like {@link Real} and {@link NonNegative}.
+ * Consider using the aliases {@link Interval.Closed}, {@link Interval.BottomClosed},
+ * {@link Interval.TopClosed}, {@link Interval.Open} and {@link Interval.Point} instead
+ * of the constructor for convenience.
+ *
+ * TODO Some common intervals are defined as static members like {@link Real} and {@link NonNegative}.
  *
  * @alpha
  */
@@ -237,7 +240,7 @@ export class Interval {
    */
   intersection(other: Interval): Interval {
     if (!this.intersects(other)) {
-      return Interval.Empty;
+      return Empty;
     }
     const getLowerBound: () => [number, boolean] = () => {
       if (this.lowerBound < other.lowerBound) {
@@ -310,16 +313,6 @@ export class Interval {
     return this.without(other).union(other.without(this));
   }
 
-  // aliases for convenience
-  /**
-   * (0,0)
-   */
-  static readonly Empty = new Interval({
-    lowerBound: 0,
-    upperBound: 0,
-    lowerBoundIncluded: false,
-    upperBoundIncluded: false,
-  });
   /**
    *
    * @param lowerBound -
@@ -378,54 +371,6 @@ export class Interval {
    * @returns [x,x]
    */
   static readonly Point = (x: number) => this.Closed(x, x);
-
-  /**
-   * [Infinity,Infinity]
-   */
-  static readonly Inf = this.Point(Infinity);
-
-  /**
-   * (-Infinity, Infinity)
-   */
-  static readonly Real = this.Open(-Infinity, Infinity);
-  /**
-   * [-Infinity, Infinity]
-   */
-  static readonly RealWithInf = this.Closed(-Infinity, Infinity);
-
-  /**
-   * [0,Infinity)
-   */
-  static readonly NonNegative = this.BottomClosed(0, Infinity);
-  /**
-   * [0,Infinity]
-   */
-  static readonly NonNegativeWithInf = this.Closed(0, Infinity);
-  /**
-   * (0,Infinity)
-   */
-  static readonly Positive = this.Open(0, Infinity);
-  /**
-   * (0,Infinity]
-   */
-  static readonly PositiveWithInf = this.TopClosed(0, Infinity);
-
-  /**
-   * (-Infinity, 0]
-   */
-  static readonly NonPositive = this.TopClosed(-Infinity, 0);
-  /**
-   * [-Infinity, 0]
-   */
-  static readonly NonPositiveWithNegInf = this.Closed(-Infinity, 0);
-  /**
-   * (-Infinity, 0)
-   */
-  static readonly Negative = this.Open(-Infinity, 0);
-  /**
-   * [-Infinity, 0)
-   */
-  static readonly NegativeWithNegInf = this.BottomClosed(-Infinity, 0);
 }
 
 interface BracketGroup {
