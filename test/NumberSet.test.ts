@@ -1,4 +1,4 @@
-import { Inf, NumberSet } from '../src';
+import { Empty, Inf, NumberSet, ParseError } from '../src';
 import {
   BottomClosedLower,
   BottomClosedUpper,
@@ -33,6 +33,21 @@ test('toString', () => {
   expect(new NumberSet([Closed]).toString()).toEqual(`{${Closed}}`);
   expect(new NumberSet([Middle, Outlier]).toString()).toEqual(
     `{${Middle}, ${Outlier}}`
+  );
+});
+
+test('fromString', () => {
+  expect(NumberSet.fromString('{}')).toEqual(EmptyOpenPoint.toSet());
+  expect(NumberSet.fromString('{[-1,1]}')).toEqual(Closed.toSet());
+  expect(NumberSet.fromString('{[-1,1], (0,0)}')).toEqual(Closed.toSet());
+  expect(NumberSet.fromString('{[ -1,1 ], ( 0,0 ) }')).toEqual(Closed.toSet());
+
+  expect(() => NumberSet.fromString('Not an set')).toThrowError(ParseError);
+  expect(() => NumberSet.fromString('{Not intervals}')).toThrowError(
+    ParseError
+  );
+  expect(() => NumberSet.fromString('{[NaN,0], (0,0)}')).toThrowError(
+    ParseError
   );
 });
 

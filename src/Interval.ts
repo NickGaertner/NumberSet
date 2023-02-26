@@ -85,7 +85,7 @@ export class Interval {
   }
 
   /**
-   * Constructs an {@link Interval} from its string representation
+   * Constructs an {@link Interval} from a string representation
    *
    * @remarks
    * Included endpoints are denoted by square brackets and excluded ones by either parentheses or reversed square brackets.
@@ -104,7 +104,7 @@ export class Interval {
   static fromString(s: string, numberTransform?: NumberTransform): Interval {
     const match = s.trim().match(intervalRegex);
     if (!match || !match.groups) {
-      throw new IntervalParseError(
+      throw new ParseError(
         `The provided string "${s}" is not of a valid interval format.`
       );
     }
@@ -114,12 +114,12 @@ export class Interval {
     const upperBound = parseFloat(upper);
 
     if (isNaN(lowerBound)) {
-      throw new IntervalParseError(
+      throw new ParseError(
         `The provided substring "${lower}" couldn't be parsed to a number.`
       );
     }
     if (isNaN(upperBound)) {
-      throw new IntervalParseError(
+      throw new ParseError(
         `The provided substring "${upper}" couldn't be parsed to a number.`
       );
     }
@@ -405,9 +405,9 @@ export class Interval {
 }
 
 /**
- * Thrown when {@link Interval.toString} is called with malformed input
+ * Thrown when {@link Interval.fromString} or {@link NumberSet.fromString} is called with malformed input
  */
-export class IntervalParseError extends Error {
+export class ParseError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'ParseError';

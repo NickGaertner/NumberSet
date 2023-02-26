@@ -1,4 +1,4 @@
-import { Interval } from '.';
+import { Interval, ParseError } from '.';
 
 /**
  * A set of numbers represented by the union of disjoint intervals
@@ -29,6 +29,9 @@ export class NumberSet {
     this.intervals = NumberSet.normalize(intervals);
   }
 
+  /**
+   * @internal
+   */
   private static normalize(
     intervals: ReadonlyArray<Interval>
   ): ReadonlyArray<Interval> {
@@ -78,11 +81,48 @@ export class NumberSet {
    * );
    * // "{(-1,0), (0,1)}"
    * ```
-   *
    * @returns This set's string representation
    */
   toString(): string {
     return `{${this.intervals.map((i) => i.toString()).join(', ')}}`;
+  }
+
+  /**
+   * Constructs a {@link NumberSet} from a string representation
+   *
+   * @remarks
+   * Expects a list of {@link Interval} string representations separated by ", "
+   * surrounded by curly braces. See {@link Interval.fromString} for more information on
+   * formatting intervals.
+   *
+   * Prefer constructing directly from {@link Interval}s instead of strings if possible
+   *
+   * @example
+   * ``` ts
+   * NumberSet.fromString("{(-1,0), (0,1)}").equals(new NumberSet([
+   *  Interval.Open(-1,0), Interval.Open(0,1)
+   * ])); // true
+   * ```
+   *
+   * @param s - String representation of the {@link NumberSet}
+   * @returns {@link NumberSet} corresponding to the string representation
+   * @throws TODO {@link IntervalParseError} if s is malformed
+   */
+  static fromString(s: string): NumberSet {
+    const trimmed = s.trim();
+    if (!trimmed.startsWith('{') || !trimmed.endsWith('}')) {
+      throw new ParseError(
+        `The provided string "${s}" is not of a valid NumberSet format.`
+      );
+    }
+    const intervalReps: string[] = trimmed
+      .slice(1, -1)
+      .split(', ')
+      .filter((t) => t.length);
+    const intervals: Interval[] = intervalReps.map((rep) =>
+      Interval.fromString(rep)
+    );
+    return new NumberSet(intervals);
   }
 
   /**
