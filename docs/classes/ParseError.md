@@ -1,38 +1,38 @@
-[numberset](../README.md) / [Exports](../modules.md) / IntervalParseError
+[numberset](../README.md) / [Exports](../modules.md) / ParseError
 
-# Class: IntervalParseError
+# Class: ParseError
 
-Thrown when [toString](Interval.md#tostring) is called with malformed input
+Thrown when [fromString](Interval.md#fromstring) or [fromString](NumberSet.md#fromstring) is called with malformed input
 
 ## Hierarchy
 
 - `Error`
 
-  ↳ **`IntervalParseError`**
+  ↳ **`ParseError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](IntervalParseError.md#constructor)
+- [constructor](ParseError.md#constructor)
 
 ### Properties
 
-- [message](IntervalParseError.md#message)
-- [name](IntervalParseError.md#name)
-- [stack](IntervalParseError.md#stack)
-- [prepareStackTrace](IntervalParseError.md#preparestacktrace)
-- [stackTraceLimit](IntervalParseError.md#stacktracelimit)
+- [message](ParseError.md#message)
+- [name](ParseError.md#name)
+- [stack](ParseError.md#stack)
+- [prepareStackTrace](ParseError.md#preparestacktrace)
+- [stackTraceLimit](ParseError.md#stacktracelimit)
 
 ### Methods
 
-- [captureStackTrace](IntervalParseError.md#capturestacktrace)
+- [captureStackTrace](ParseError.md#capturestacktrace)
 
 ## Constructors
 
 ### constructor
 
-• **new IntervalParseError**(`message`)
+• **new ParseError**(`message`)
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Error.constructor
 
 #### Defined in
 
-[src/Interval.ts:411](https://github.com/NickGaertner/NumberSet/blob/0d6128c/src/Interval.ts#L411)
+[src/Interval.ts:411](https://github.com/NickGaertner/NumberSet/blob/06f1153/src/Interval.ts#L411)
 
 ## Properties
 
