@@ -14,9 +14,10 @@ A small library to perform set operations on number sets that can be represented
 capable of common set operations.
 This library's focus is not on querying, although possible. If your primary use case is querying and you find this library lacking, consider using [interval trees](https://www.npmjs.com/search?q=interval%20tree&ranking=optimal) instead.
 
+The library supports closed, open and half-open intervals (bounded and unbounded) and sets build out of them. Both intervals and sets can be constructed from string representations.
 See the
 [documentation](https://github.com/NickGaertner/NumberSet/blob/master/docs/modules.md)
-for more information.
+for more details.
 
 ### Installation
 
