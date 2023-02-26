@@ -1,3 +1,4 @@
+import { assert } from 'console';
 import {
   NumberSet,
   Interval,
@@ -13,6 +14,7 @@ import {
   Negative,
   NegativeWithNegInf,
   PositiveWithInf,
+  NumberTransform,
 } from '../src';
 
 import {
@@ -129,6 +131,23 @@ test('symDiff', () => {
   );
 });
 
+test('fromString', () => {
+  expect(Interval.fromString('[-1,1]')).toEqual(Closed);
+  expect(Interval.fromString('[-1,1)')).toEqual(BottomClosed);
+  expect(Interval.fromString('(-1,1]')).toEqual(TopClosed);
+  expect(Interval.fromString('(-1,1)')).toEqual(Open);
+  expect(Interval.fromString(']-1,1[')).toEqual(Open);
+
+  expect(Interval.fromString(' [ -1 , 1 ] ')).toEqual(Closed);
+
+  expect(() => Interval.fromString('Not an interval')).toThrowError(
+    IntervalParseError
+  );
+  expect(() => Interval.fromString('{0,0}')).toThrowError(IntervalParseError);
+  expect(() => Interval.fromString('[NaN,0]')).toThrowError(IntervalParseError);
+  expect(() => Interval.fromString('[0,NaN]')).toThrowError(IntervalParseError);
+});
+
 test('infinity & predefined intervals', () => {
   expect(Inf().toString()).toEqual(`[Infinity,Infinity]`);
 
@@ -176,19 +195,73 @@ test('infinity & predefined intervals', () => {
   );
 });
 
-test('fromString', () => {
-  expect(Interval.fromString('[-1,1]')).toEqual(Closed);
-  expect(Interval.fromString('[-1,1)')).toEqual(BottomClosed);
-  expect(Interval.fromString('(-1,1]')).toEqual(TopClosed);
-  expect(Interval.fromString('(-1,1)')).toEqual(Open);
-  expect(Interval.fromString(']-1,1[')).toEqual(Open);
+test('number transforms as type constraints', () => {
+  const checkInt: NumberTransform = (x) => {
+    if (!Number.isSafeInteger(x)) {
+      throw new Error();
+    }
+    return x;
+  };
+  expect(() => Interval.Point(Math.PI, checkInt)).toThrow();
 
-  expect(Interval.fromString(' [ -1 , 1 ] ')).toEqual(Closed);
+  const integerInterval = Interval.Closed(0, 1, checkInt);
 
-  expect(() => Interval.fromString('Not an interval')).toThrowError(
-    IntervalParseError
+  expect(() => integerInterval.union(Interval.Point(0.5))).not.toThrow();
+  expect(() => integerInterval.union(Interval.Closed(-0.5, 0.5))).toThrow();
+  expect(() => Interval.Closed(-0.5, 0.5).union(integerInterval)).not.toThrow();
+
+  expect(() => integerInterval.intersection(Interval.Point(0.5))).toThrow();
+  expect(() =>
+    Interval.Closed(-0.5, 0.5).intersection(integerInterval)
+  ).not.toThrow();
+
+  expect(() => integerInterval.without(Interval.Point(0.5))).toThrow();
+  expect(() =>
+    Interval.Closed(-0.5, 0.5).without(integerInterval)
+  ).not.toThrow();
+
+  expect(() => integerInterval.symDiff(Interval.Point(0.5))).toThrow();
+  expect(() =>
+    Interval.Closed(-0.5, 0.5).symDiff(integerInterval)
+  ).not.toThrow();
+});
+
+test('number transforms as actual transforms', () => {
+  const clampToUnit: NumberTransform = (x) => {
+    return Math.min(Math.max(0, x), 1);
+  };
+  expect(Interval.Point(-1, clampToUnit)).toEqual(Interval.Point(0));
+
+  const clampedInterval = Interval.Closed(0.25, 0.75, clampToUnit);
+
+  expect(clampedInterval.union(Interval.Point(0.5))).toEqual(
+    clampedInterval.toSet()
   );
-  expect(() => Interval.fromString('{0,0}')).toThrowError(IntervalParseError);
-  expect(() => Interval.fromString('[NaN,0]')).toThrowError(IntervalParseError);
-  expect(() => Interval.fromString('[0,NaN]')).toThrowError(IntervalParseError);
+  expect(clampedInterval.union(Interval.Closed(-0.5, 2))).toEqual(
+    Interval.Closed(0, 1).toSet()
+  );
+  expect(Interval.Closed(-0.5, 2).union(clampedInterval)).toEqual(
+    Interval.Closed(-0.5, 2).toSet()
+  );
+
+  expect(Interval.Closed(-0.5, 0.5).intersection(clampedInterval)).toEqual(
+    Interval.Closed(0.25, 0.5)
+  );
+
+  expect(Interval.Closed(-0.5, 0.5).without(clampedInterval)).toEqual(
+    Interval.BottomClosed(-0.5, 0.25).toSet()
+  );
+
+  expect(clampedInterval.symDiff(Interval.Closed(-0.5, 0.5))).toEqual(
+    new NumberSet([
+      Interval.BottomClosed(0, 0.25),
+      Interval.TopClosed(0.5, 0.75),
+    ])
+  );
+  expect(Interval.Closed(-0.5, 0.5).symDiff(clampedInterval)).toEqual(
+    new NumberSet([
+      Interval.BottomClosed(-0.5, 0.25),
+      Interval.TopClosed(0.5, 0.75),
+    ])
+  );
 });

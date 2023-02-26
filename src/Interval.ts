@@ -1,7 +1,7 @@
 import { Empty, NumberSet } from '.';
 
 export type NumberTransform = (x: number) => number;
-
+const numberId: NumberTransform = (x) => x;
 /**
  * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}
  *
@@ -11,9 +11,16 @@ export type NumberTransform = (x: number) => number;
  * {@link Interval.TopClosed}, {@link Interval.Open} and {@link Interval.Point} instead
  * of the constructor for convenience.
  *
- * TODO Some common intervals are defined as static members like {@link Real} and {@link NonNegative}.
+ * Some common intervals are already defined like {@link Real} and {@link NonNegative}.
  *
- * @alpha
+ * All intervals can be constructed with a {@link NumberTransform} that can be used to
+ * - include sanity checks, like `Number.isSafeInteger(x)` (think of them as type constraints)
+ * - actually transform the bounds, for example clamping the values to nonnegative numbers
+ * The {@link NumberTransform} is propagated by all functions returning {@link Interval} or {@link NumberSet}
+ * using the {@link NumberTransform} from the __called__ {@link Interval}
+ *  - _Note: If your {@link NumberTransform} throws then all functions that use it can throw as well!_
+ *  - _Note: The {@link NumberTransform} should be idempotent!_
+ *
  */
 export class Interval {
   readonly lowerBound: number;
@@ -31,13 +38,15 @@ export class Interval {
    * @param upperBound - The interval's upper endpoint
    * @param lowerBoundIncluded - Indicates wether {@link lowerBound} should be included
    * @param upperBoundIncluded -Indicates wether {@link upperBound} should be included
+   * @param numberTransform - Transform function applied to the bounds and propagated
+   * to new intervals created by member functions
    */
   constructor({
     lowerBound,
     upperBound,
     lowerBoundIncluded,
     upperBoundIncluded,
-    numberTransform,
+    numberTransform = numberId,
   }: {
     lowerBound: number;
     upperBound: number;
@@ -45,7 +54,7 @@ export class Interval {
     upperBoundIncluded: boolean;
     numberTransform?: NumberTransform;
   }) {
-    this.numberTransform = numberTransform ? numberTransform : (x) => x;
+    this.numberTransform = numberTransform;
     this.lowerBound = this.numberTransform(lowerBound);
     this.upperBound = this.numberTransform(upperBound);
     this.lowerBoundIncluded = lowerBoundIncluded;
@@ -53,7 +62,7 @@ export class Interval {
   }
 
   /**
-   * Transforms the interval to its string representation using square brackets for included and parentheses for excluded endpoints
+   * Transforms the {@link Interval} to its string representation using square brackets for included and parentheses for excluded endpoints
    *
    * @example
    * ``` ts
@@ -71,7 +80,7 @@ export class Interval {
   }
 
   /**
-   * Constructs an interval from its string representation
+   * Constructs an {@link Interval} from its string representation
    *
    * @remarks
    * Included endpoints are denoted by square brackets and excluded ones by either parentheses or reversed square brackets.
@@ -82,8 +91,9 @@ export class Interval {
    * Interval.fromString("[0,1[").equals(Interval.fromString("[0,1)")) // true
    * ```
    *
-   * @param s - String representation of the interval
-   * @returns Interval corresponding to the string representation
+   * @param s - String representation of the {@link Interval}
+   * @param numberTransform - See {@link Interval} for more information
+   * @returns {@link Interval} corresponding to the string representation
    * @throws {@link IntervalParseError} if s is malformed
    */
   static fromString(s: string, numberTransform?: NumberTransform): Interval {
@@ -125,7 +135,7 @@ export class Interval {
 
   /**
    *
-   * @returns NumberSet equivalent to this interval
+   * @returns NumberSet equivalent to this {@link Interval}
    */
   toSet(): NumberSet {
     return new NumberSet([this]);
@@ -133,7 +143,7 @@ export class Interval {
 
   /**
    *
-   * @returns True if this interval equals an empty set
+   * @returns True if this {@link Interval} equals an empty set
    */
   isEmpty() {
     return (
@@ -145,8 +155,8 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to compare to
-   * @returns True if the intervals represent the same set
+   * @param other - {@link Interval} to compare to
+   * @returns True if the {@link Interval}s represent the same set
    */
   equals(other: Interval): boolean {
     return (
@@ -161,7 +171,7 @@ export class Interval {
   /**
    *
    * @param x - Number to search for
-   * @returns True if x is included in this interval
+   * @returns True if x is included in this {@link Interval}
    */
   contains(x: number): boolean {
     return (
@@ -173,8 +183,8 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to merge with
-   * @returns The union of both intervals, e.g. a new interval containing all elements included in `either` of the source intervals
+   * @param other - {@link Interval} to merge with
+   * @returns The union of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in `either` of the source {@link Interval}s
    */
   union(other: Interval): NumberSet {
     if (!this.intersects(other)) {
@@ -223,8 +233,8 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to check for overlap
-   * @returns True if the intervals overlap, e.g. their intersection is not the empty set
+   * @param other - {@link Interval} to check for overlap
+   * @returns True if the {@link Interval}s overlap, e.g. their intersection is not the empty set
    */
   intersects(other: Interval): boolean {
     if (this.isEmpty() || other.isEmpty()) {
@@ -243,8 +253,8 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to intersect with
-   * @returns The overlap of both intervals, e.g. a new interval containing all elements included in `both` of the source intervals
+   * @param other - {@link Interval} to intersect with
+   * @returns The overlap of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in `both` of the source {@link Interval}s
    */
   intersection(other: Interval): Interval {
     if (!this.intersects(other)) {
@@ -291,8 +301,8 @@ export class Interval {
 
   /**
    *
-   * @param other - Interval to subtract
-   * @returns The difference of both intervals, e.g. a new interval containing all elements included in `this` and not in other
+   * @param other - {@link Interval} to subtract
+   * @returns The difference of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in `this` and not in other
    */
   without(other: Interval): NumberSet {
     if (!this.intersects(other)) {
@@ -318,11 +328,17 @@ export class Interval {
   /**
    *
    * @param other -
-   * @returns The symmetric difference of both intervals, e.g. a new interval containing all elements included in exactly one of the intervals
+   * @returns The symmetric difference of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in exactly one of the {@link Interval}s
    */
   symDiff(other: Interval): NumberSet {
-    return this.without(other).union(other.without(this));
+    /* 
+    We intentionally write the term without function calls on other
+    to avoid mixing number transforms
+    */
+    return this.union(other).without(this.intersection(other).toSet());
   }
+
+  /* Aliases for constructing new intervals*/
 
   private static readonly withInclusion =
     (lowerBoundIncluded: boolean, upperBoundIncluded: boolean) =>
@@ -340,40 +356,41 @@ export class Interval {
       });
 
   /**
-   *
-   * @param lowerBound -
-   * @param upperBound -
+   * See {@link Interval} for more information
    * @returns [lowerBound,upperBound]
    */
   static readonly Closed = this.withInclusion(true, true);
   /**
-   *
-   * @param lowerBound -
-   * @param upperBound -
+   * See {@link Interval} for more information
    * @returns (lowerBound,upperBound)
    */
   static readonly Open = this.withInclusion(false, false);
   /**
-   *
-   * @param lowerBound -
-   * @param upperBound -
+   * See {@link Interval} for more information
    * @returns [lowerBound,upperBound)
    */
   static readonly BottomClosed = this.withInclusion(true, false);
   /**
-   *
-   * @param lowerBound -
-   * @param upperBound -
+   * See {@link Interval} for more information
    * @returns (lowerBound,upperBound]
    */
   static readonly TopClosed = this.withInclusion(false, true);
   /**
-   *
-   * @param x -
+   * See {@link Interval} for more information
    * @returns [x,x]
    */
   static readonly Point = (x: number, numberTransform?: NumberTransform) =>
     this.Closed(x, x, numberTransform);
+}
+
+/**
+ * Thrown when {@link Interval.toString} is called with malformed input
+ */
+export class IntervalParseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ParseError';
+  }
 }
 
 interface BracketGroup {
@@ -413,13 +430,3 @@ const intervalRegex = new RegExp(
     upperBoundGroup +
     closingBracketGroup
 );
-
-/**
- * Thrown when {@link Interval.toString} is called with malformed input
- */
-export class IntervalParseError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ParseError';
-  }
-}

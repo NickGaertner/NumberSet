@@ -1,4 +1,3 @@
-// TODO get rid of assert
 import assert from 'assert';
 import { Interval } from '.';
 
@@ -8,13 +7,16 @@ import { Interval } from '.';
  * @remarks
  * Supports the most common set operations
  *
- * @alpha
+ * - _Note: Most functions use {@link Interval} functions internally.
+ * It's advised that all provided {@link Interval}s use the same
+ * {@link NumberTransform}._
+ *
  */
 export class NumberSet {
   readonly intervals: ReadonlyArray<Interval>;
 
   /**
-   * Constructs a new NumberSet from the given intervals.
+   * Constructs a new {@link NumberSet} from the given intervals.
    *
    * @remarks
    * Note that the intervals are stored internally in a "normalized" fashion meaning
@@ -112,7 +114,7 @@ export class NumberSet {
 
   /**
    *
-   * @param other - NumberSet to compare to
+   * @param other - {@link NumberSet} to compare to
    * @returns True if both sets represent the same abstract set
    */
   equals(other: NumberSet): boolean {
@@ -143,8 +145,8 @@ export class NumberSet {
 
   /**
    *
-   * @param other - NumberSet to merge with
-   * @returns The union of both sets, e.g. a new NumberSet containing
+   * @param other - {@link NumberSet} to merge with
+   * @returns The union of both sets, e.g. a new {@link NumberSet} containing
    * all elements included in `one` of the source sets
    */
   union(other: NumberSet): NumberSet {
@@ -153,7 +155,7 @@ export class NumberSet {
 
   /**
    *
-   * @param other - NumberSet to check for intersection
+   * @param other - {@link NumberSet}  to check for intersection
    * @returns True if the sets aren't disjoint, e.g. their intersection
    * is not empty
    */
@@ -170,8 +172,8 @@ export class NumberSet {
 
   /**
    *
-   * @param other - NumberSet to intersect with
-   * @returns The overlap of both sets, e.g. a new NumberSet containing
+   * @param other - {@link NumberSet} to intersect with
+   * @returns The overlap of both sets, e.g. a new {@link NumberSet} containing
    * all elements included in `both` of the source sets
    */
   intersection(other: NumberSet): NumberSet {
@@ -183,11 +185,18 @@ export class NumberSet {
 
   /**
    *
-   * @param other - NumberSet to subtract
-   * @returns The difference of both sets, e.g. a new NumberSet
+   * @param other - {@link NumberSet} to subtract
+   * @returns The difference of both sets, e.g. a new {@link NumberSet}
    *  containing all elements included in `this` and not in other
    */
   without(other: NumberSet): NumberSet {
+    if (other.isEmpty()) {
+      return this;
+    }
+    /* 
+    We intentionally write the term without function calls on other
+    to avoid mixing number transforms
+    */
     const difference = this.intervals.flatMap(
       (minuend) =>
         other.intervals
@@ -200,14 +209,14 @@ export class NumberSet {
   /**
    *
    * @param other -
-   * @returns The symmetric difference of both sets, e.g. a new NumberSet
+   * @returns The symmetric difference of both sets, e.g. a new {@link NumberSet}
    *  containing all elements included in `exactly` one of the sets
    */
   symDiff(other: NumberSet): NumberSet {
-    const symDiff = [
-      ...this.without(other).intervals,
-      ...other.without(this).intervals,
-    ];
-    return new NumberSet(symDiff);
+    /* 
+    We intentionally write the term without function calls on other
+    to avoid mixing number transforms
+    */
+    return this.union(other).without(this.intersection(other));
   }
 }
