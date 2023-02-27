@@ -57,8 +57,8 @@ export class NumberSet {
         }
         const last = prev[prev.length - 1];
         if (last.intersects(current)) {
-          const union = last.union(current).intervals;
-          prev[prev.length - 1] = union[0];
+          const union = last.union(current).intervals[0];
+          prev[prev.length - 1] = union;
         } else {
           prev.push(current);
         }
@@ -106,7 +106,7 @@ export class NumberSet {
    *
    * @param s - String representation of the {@link NumberSet}
    * @returns {@link NumberSet} corresponding to the string representation
-   * @throws TODO {@link ParseError} if s is malformed
+   * @throws {@link ParseError} if s is malformed
    *
    * @alpha
    */
@@ -162,6 +162,7 @@ export class NumberSet {
       return false;
     }
     for (let i = 0; i < this.intervals.length; ++i) {
+      // possible because of the normalized intervals array
       if (!this.intervals[i].equals(other.intervals[i])) {
         return false;
       }
@@ -175,12 +176,26 @@ export class NumberSet {
    * @returns True if x is included in this set
    */
   contains(x: number): boolean {
-    for (const I of this.intervals) {
-      if (I.contains(x)) {
-        return true;
+    let [l, r] = [0, this.intervals.length - 1];
+    while (l <= r) {
+      const m = Math.floor((l + r) / 2);
+      const interval = this.intervals[m];
+      if (x < interval.lowerBound) {
+        r = m - 1;
+      } else if (interval.upperBound < x) {
+        l = m + 1;
+      } else {
+        return interval.contains(x);
       }
     }
     return false;
+
+    // for (const i of this.intervals) {
+    //   if (i.contains(x)) {
+    //     return true;
+    //   }
+    // }
+    // return false;
   }
 
   /**
@@ -190,6 +205,7 @@ export class NumberSet {
    * all elements included in `one` of the source sets
    */
   union(other: NumberSet): NumberSet {
+    // TODO we can cheaply sort here
     return new NumberSet([...this.intervals, ...other.intervals]);
   }
 
@@ -200,6 +216,7 @@ export class NumberSet {
    * is not empty
    */
   intersects(other: NumberSet): boolean {
+    // TODO see if we can increase performance
     for (const i of this.intervals) {
       for (const j of other.intervals) {
         if (i.intersects(j)) {
@@ -217,6 +234,7 @@ export class NumberSet {
    * all elements included in `both` of the source sets
    */
   intersection(other: NumberSet): NumberSet {
+    // TODO see if we can increase performance
     const intersections = this.intervals.flatMap((i) =>
       other.intervals.map((j) => i.intersection(j))
     );
@@ -230,6 +248,7 @@ export class NumberSet {
    *  containing all elements included in `this` and not in other
    */
   without(other: NumberSet): NumberSet {
+    // TODO see if we can increase performance
     if (other.isEmpty()) {
       return this;
     }
@@ -242,7 +261,7 @@ export class NumberSet {
       (
         minuend // =: M
       ) =>
-        other.intervals // intervals to subtract =: S1,...,Sn
+        other.intervals // =: S1,...,Sn
           .map((subtrahend) => minuend.without(subtrahend)) // -> M\S1,...,M\Sn
           .reduce((prev, current) => prev.intersection(current)).intervals // -> M\S1 ∩...∩ M\Sn
     );

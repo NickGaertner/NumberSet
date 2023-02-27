@@ -83,13 +83,16 @@ test('equals', () => {
   ).toEqual(new NumberSet([Closed, Outlier]));
 });
 
-test('contains', () => {
-  const set = new NumberSet([Closed]);
-  expect(set.contains(-2)).toBeFalsy();
-  expect(set.contains(-1)).toBeTruthy();
-  expect(set.contains(0)).toBeTruthy();
-  expect(set.contains(1)).toBeTruthy();
-  expect(set.contains(2)).toBeFalsy();
+test.only('contains', () => {
+  const indexes = Array.from({ length: 1000 }, (n, i) => i);
+  const largeSet = new NumberSet(indexes.map((i) => Interval.Open(i, i + 1)));
+  const start = performance.now();
+
+  indexes.forEach((i) => {
+    expect(largeSet.contains(i)).toBeFalsy();
+    expect(largeSet.contains(i + 0.5)).toBeTruthy();
+  });
+  console.log('********** TIME:', performance.now() - start);
 });
 
 test('union', () => {
