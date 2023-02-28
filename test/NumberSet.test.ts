@@ -18,7 +18,7 @@ import {
 
 test('normalize', () => {
   expect(
-    new NumberSet([
+    NumberSet.from([
       OpenLower,
       OpenUpper,
       Closed,
@@ -26,12 +26,12 @@ test('normalize', () => {
       BottomClosedUpper,
       Outlier,
     ])
-  ).toEqual(new NumberSet([Closed, Outlier]));
+  ).toEqual(NumberSet.from([Closed, Outlier]));
 });
 
 test('toString', () => {
-  expect(new NumberSet([Closed]).toString()).toEqual(`{${Closed}}`);
-  expect(new NumberSet([Middle, Outlier]).toString()).toEqual(
+  expect(NumberSet.from([Closed]).toString()).toEqual(`{${Closed}}`);
+  expect(NumberSet.from([Middle, Outlier]).toString()).toEqual(
     `{${Middle}, ${Outlier}}`
   );
 });
@@ -52,27 +52,29 @@ test('fromString', () => {
 });
 
 test('iterator', () => {
-  expect([...new NumberSet([])]).toEqual([]);
-  expect([...new NumberSet([Middle, Outlier])]).toEqual([Middle, Outlier]);
+  expect([...NumberSet.from([])]).toEqual([]);
+  expect([...NumberSet.from([Middle, Outlier])]).toEqual([Middle, Outlier]);
 });
 
 test('IsEmpty', () => {
-  expect(new NumberSet([Closed]).isEmpty()).toBeFalsy();
-  expect(new NumberSet([EmptyOpenPoint]).isEmpty()).toBeTruthy();
-  expect(new NumberSet([EmptyCrossed]).isEmpty()).toBeTruthy();
+  expect(NumberSet.from([Closed]).isEmpty()).toBeFalsy();
+  expect(NumberSet.from([EmptyOpenPoint]).isEmpty()).toBeTruthy();
+  expect(NumberSet.from([EmptyCrossed]).isEmpty()).toBeTruthy();
 });
 
 test('equals', () => {
-  expect(new NumberSet([])).toEqual(new NumberSet([]));
-  expect(new NumberSet([])).not.toEqual(new NumberSet([Inf()]));
-  expect(new NumberSet([Closed])).toEqual(new NumberSet([Closed]));
-  expect(new NumberSet([Closed])).not.toEqual(new NumberSet([Open]));
-  expect(new NumberSet([Closed, Open])).toEqual(new NumberSet([Open, Closed]));
-  expect(new NumberSet([ClosedLower, ClosedUpper])).toEqual(
-    new NumberSet([Closed])
+  expect(NumberSet.from([])).toEqual(NumberSet.from([]));
+  expect(NumberSet.from([])).not.toEqual(NumberSet.from([Inf()]));
+  expect(NumberSet.from([Closed])).toEqual(NumberSet.from([Closed]));
+  expect(NumberSet.from([Closed])).not.toEqual(NumberSet.from([Open]));
+  expect(NumberSet.from([Closed, Open])).toEqual(
+    NumberSet.from([Open, Closed])
+  );
+  expect(NumberSet.from([ClosedLower, ClosedUpper])).toEqual(
+    NumberSet.from([Closed])
   );
   expect(
-    new NumberSet([
+    NumberSet.from([
       OpenLower,
       OpenUpper,
       Closed,
@@ -80,12 +82,12 @@ test('equals', () => {
       BottomClosedUpper,
       Outlier,
     ])
-  ).toEqual(new NumberSet([Closed, Outlier]));
+  ).toEqual(NumberSet.from([Closed, Outlier]));
 });
 
-test.only('contains', () => {
+test('contains', () => {
   const indexes = Array.from({ length: 1000 }, (n, i) => i);
-  const largeSet = new NumberSet(indexes.map((i) => Interval.Open(i, i + 1)));
+  const largeSet = NumberSet.from(indexes.map((i) => Interval.Open(i, i + 1)));
   const start = performance.now();
 
   indexes.forEach((i) => {
@@ -97,74 +99,83 @@ test.only('contains', () => {
 
 test('union', () => {
   expect(
-    new NumberSet([ClosedLower]).union(new NumberSet([ClosedUpper]))
-  ).toEqual(new NumberSet([Closed]));
+    NumberSet.from([ClosedLower]).union(NumberSet.from([ClosedUpper]))
+  ).toEqual(NumberSet.from([Closed]));
   expect(
-    new NumberSet([TopClosedLower]).union(
-      new NumberSet([BottomClosedUpper, Outlier])
+    NumberSet.from([TopClosedLower]).union(
+      NumberSet.from([BottomClosedUpper, Outlier])
     )
-  ).toEqual(new NumberSet([Open, Outlier]));
+  ).toEqual(NumberSet.from([Open, Outlier]));
 });
 
 test('intersects', () => {
   expect(
-    new NumberSet([ClosedLower]).intersects(new NumberSet([ClosedUpper]))
+    NumberSet.from([ClosedLower]).intersects(NumberSet.from([ClosedUpper]))
   ).toBeTruthy();
   expect(
-    new NumberSet([OpenLower]).intersects(new NumberSet([OpenUpper]))
+    NumberSet.from([OpenLower]).intersects(NumberSet.from([OpenUpper]))
   ).toBeFalsy();
   expect(
-    new NumberSet([OpenLower, Outlier]).intersects(new NumberSet([OpenUpper]))
+    NumberSet.from([OpenLower, Outlier]).intersects(NumberSet.from([OpenUpper]))
   ).toBeFalsy();
   expect(
-    new NumberSet([OpenLower, Outlier]).intersects(
-      new NumberSet([OpenUpper, Outlier])
+    NumberSet.from([OpenLower, Outlier]).intersects(
+      NumberSet.from([OpenUpper, Outlier])
     )
   ).toBeTruthy();
 });
 
 test('intersection', () => {
   expect(
-    new NumberSet([ClosedLower]).intersection(new NumberSet([ClosedUpper]))
-  ).toEqual(new NumberSet([Middle]));
+    NumberSet.from([ClosedLower]).intersection(NumberSet.from([ClosedUpper]))
+  ).toEqual(NumberSet.from([Middle]));
 
   expect(
-    new NumberSet([Closed]).intersection(
-      new NumberSet([BottomClosedLower, TopClosedUpper])
+    NumberSet.from([Closed]).intersection(
+      NumberSet.from([BottomClosedLower, TopClosedUpper])
     )
-  ).toEqual(new NumberSet([BottomClosedLower, TopClosedUpper]));
+  ).toEqual(NumberSet.from([BottomClosedLower, TopClosedUpper]));
   expect(
-    new NumberSet([OpenLower]).intersection(new NumberSet([OpenUpper]))
-  ).toEqual(new NumberSet([]));
+    NumberSet.from([OpenLower]).intersection(NumberSet.from([OpenUpper]))
+  ).toEqual(NumberSet.from([]));
 });
 
 test('without', () => {
   expect(
-    new NumberSet([ClosedLower]).without(new NumberSet([ClosedUpper]))
-  ).toEqual(new NumberSet([BottomClosedLower]));
+    NumberSet.from([OpenLower]).without(NumberSet.from([OpenUpper]))
+  ).toEqual(NumberSet.from([OpenLower]));
   expect(
-    new NumberSet([OpenLower]).without(new NumberSet([OpenUpper]))
-  ).toEqual(new NumberSet([OpenLower]));
+    NumberSet.from([OpenUpper]).without(NumberSet.from([OpenLower]))
+  ).toEqual(NumberSet.from([OpenUpper]));
+
   expect(
-    new NumberSet([Closed]).without(new NumberSet([Middle, Outlier]))
-  ).toEqual(new NumberSet([BottomClosedLower, TopClosedUpper]));
+    NumberSet.from([ClosedLower]).without(NumberSet.from([ClosedUpper]))
+  ).toEqual(NumberSet.from([BottomClosedLower]));
   expect(
-    new NumberSet([0, 1, 2].map((n) => Interval.Open(n, n + 1))).without(
-      new NumberSet([0, 1, 2, 3].map((n) => Interval.Open(n - 0.5, n + 0.5)))
+    NumberSet.from([ClosedUpper]).without(NumberSet.from([ClosedLower]))
+  ).toEqual(NumberSet.from([TopClosedUpper]));
+
+  expect(
+    NumberSet.from([Closed]).without(NumberSet.from([Middle, Outlier]))
+  ).toEqual(NumberSet.from([BottomClosedLower, TopClosedUpper]));
+  expect(
+    NumberSet.from([Middle, Outlier]).without(NumberSet.from([Closed]))
+  ).toEqual(NumberSet.from([Outlier]));
+
+  expect(
+    NumberSet.from([0, 1, 2, 3].map((n) => Interval.Open(n, n + 1))).without(
+      NumberSet.from(
+        [0, 1, 2, 3, 4].map((n) => Interval.Open(n - 0.5, n + 0.5))
+      )
     )
-  ).toEqual(new NumberSet([0.5, 1.5, 2.5].map((n) => Interval.Point(n))));
-  expect(
-    new NumberSet([0, 1, 2, 3].map((n) => Interval.Open(n, n + 1))).without(
-      new NumberSet([0, 1, 2, 3, 4].map((n) => Interval.Open(n - 0.5, n + 0.5)))
-    )
-  ).toEqual(new NumberSet([0.5, 1.5, 2.5, 3.5].map((n) => Interval.Point(n))));
+  ).toEqual(NumberSet.from([0.5, 1.5, 2.5, 3.5].map((n) => Interval.Point(n))));
 });
 
 test('symDiff', () => {
   expect(
-    new NumberSet([ClosedLower]).symDiff(new NumberSet([ClosedUpper]))
-  ).toEqual(new NumberSet([BottomClosedLower, TopClosedUpper]));
+    NumberSet.from([ClosedLower]).symDiff(NumberSet.from([ClosedUpper]))
+  ).toEqual(NumberSet.from([BottomClosedLower, TopClosedUpper]));
   expect(
-    new NumberSet([OpenLower]).symDiff(new NumberSet([OpenUpper]))
-  ).toEqual(new NumberSet([OpenLower, OpenUpper]));
+    NumberSet.from([OpenLower]).symDiff(NumberSet.from([OpenUpper]))
+  ).toEqual(NumberSet.from([OpenLower, OpenUpper]));
 });

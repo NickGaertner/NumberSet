@@ -90,7 +90,7 @@ test('union', () => {
   expect(Closed.union(ClosedUpper)).toEqual(Closed.toSet());
   expect(Closed.union(Open)).toEqual(Closed.toSet());
   expect(TopClosedLower.union(BottomClosedUpper)).toEqual(Open.toSet());
-  expect(Middle.union(Outlier)).toEqual(new NumberSet([Middle, Outlier]));
+  expect(Middle.union(Outlier)).toEqual(NumberSet.from([Middle, Outlier]));
 });
 
 test('intersects', () => {
@@ -119,16 +119,16 @@ test('without', () => {
   expect(Closed.without(Outlier)).toEqual(Closed.toSet());
   expect(OpenLower.without(OpenUpper)).toEqual(OpenLower.toSet());
   expect(Closed.without(Middle)).toEqual(
-    new NumberSet([BottomClosedLower, TopClosedUpper])
+    NumberSet.from([BottomClosedLower, TopClosedUpper])
   );
 });
 
 test('symDiff', () => {
   expect(ClosedLower.symDiff(ClosedUpper)).toEqual(
-    new NumberSet([BottomClosedLower, TopClosedUpper])
+    NumberSet.from([BottomClosedLower, TopClosedUpper])
   );
   expect(OpenLower.symDiff(OpenUpper)).toEqual(
-    new NumberSet([OpenLower, OpenUpper])
+    NumberSet.from([OpenLower, OpenUpper])
   );
 });
 
@@ -162,11 +162,11 @@ test('infinity & predefined intervals', () => {
   expect(RealWithInf().contains(0)).toBeTruthy();
   expect(RealWithInf().contains(Infinity)).toBeTruthy();
 
-  expect(Inf().union(Inf())).toEqual(new NumberSet([Inf()]));
-  expect(Inf().union(Closed)).toEqual(new NumberSet([Inf(), Closed]));
-  expect(NonNegative().union(NonPositive())).toEqual(new NumberSet([Real()]));
+  expect(Inf().union(Inf())).toEqual(NumberSet.from([Inf()]));
+  expect(Inf().union(Closed)).toEqual(NumberSet.from([Inf(), Closed]));
+  expect(NonNegative().union(NonPositive())).toEqual(NumberSet.from([Real()]));
   expect(NonNegativeWithInf().union(NonPositiveWithNegInf())).toEqual(
-    new NumberSet([RealWithInf()])
+    NumberSet.from([RealWithInf()])
   );
 
   expect(NonNegative().intersects(NonPositive())).toBeTruthy();
@@ -180,17 +180,17 @@ test('infinity & predefined intervals', () => {
   expect(Real().intersection(RealWithInf())).toEqual(Real());
 
   expect(Real().without(Middle)).toEqual(
-    new NumberSet([Negative(), Positive()])
+    NumberSet.from([Negative(), Positive()])
   );
   expect(NonNegativeWithInf().without(Inf())).toEqual(
-    new NumberSet([NonNegative()])
+    NumberSet.from([NonNegative()])
   );
 
   expect(NonNegative().symDiff(NonPositive())).toEqual(
-    new NumberSet([Negative(), Positive()])
+    NumberSet.from([Negative(), Positive()])
   );
   expect(NonNegativeWithInf().symDiff(NonPositiveWithNegInf())).toEqual(
-    new NumberSet([NegativeWithNegInf(), PositiveWithInf()])
+    NumberSet.from([NegativeWithNegInf(), PositiveWithInf()])
   );
 });
 
@@ -252,13 +252,13 @@ test('number transforms as actual transforms', () => {
   );
 
   expect(clampedInterval.symDiff(Interval.Closed(-0.5, 0.5))).toEqual(
-    new NumberSet([
+    NumberSet.from([
       Interval.BottomClosed(0, 0.25),
       Interval.TopClosed(0.5, 0.75),
     ])
   );
   expect(Interval.Closed(-0.5, 0.5).symDiff(clampedInterval)).toEqual(
-    new NumberSet([
+    NumberSet.from([
       Interval.BottomClosed(-0.5, 0.25),
       Interval.TopClosed(0.5, 0.75),
     ])

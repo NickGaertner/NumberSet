@@ -1,3 +1,4 @@
+import assert from 'assert';
 import { Interval, ParseError } from '.';
 
 /**
@@ -11,6 +12,7 @@ import { Interval, ParseError } from '.';
  * {@link NumberTransform}._
  *
  */
+
 export class NumberSet {
   readonly intervals: ReadonlyArray<Interval>;
 
@@ -18,38 +20,56 @@ export class NumberSet {
    * Constructs a new {@link NumberSet} from the given intervals.
    *
    * @remarks
-   * Note that the intervals are stored internally in a "normalized" fashion meaning
+   * Note that the intervals are stored internally in a "normalized" manner meaning
    *  - intersecting intervals are merged
    *  - empty intervals are omitted
    *  - the intervals are sorted by their lower bound in ascending order
    *
    * @param intervals - Intervals representing this set
    */
-  constructor(intervals: ReadonlyArray<Interval>) {
-    this.intervals = NumberSet._normalize(intervals);
+  static from(intervals: ReadonlyArray<Interval>): NumberSet {
+    return new NumberSet(intervals);
+  }
+
+  /**
+   * @internal
+   */
+  private constructor(
+    intervals: ReadonlyArray<Interval>,
+    intervalState?: IntervalState
+  ) {
+    this.intervals =
+      intervalState === IntervalState.Normalized
+        ? intervals
+        : NumberSet._normalize(
+            intervals,
+            intervalState === IntervalState.Sorted
+          );
   }
 
   /**
    * @internal
    */
   private static _normalize(
-    intervals: ReadonlyArray<Interval>
+    intervals: ReadonlyArray<Interval>,
+    isSorted: boolean
   ): ReadonlyArray<Interval> {
     let modifiedIntervals = intervals.filter((i) => !i.isEmpty());
     if (modifiedIntervals.length === 0) {
       return modifiedIntervals;
     }
-    modifiedIntervals.sort((a, b) => {
-      const delta = a.lowerBound - b.lowerBound;
-      if (delta !== 0) {
-        return delta;
-      }
-      if (a.lowerBoundIncluded === b.lowerBoundIncluded) {
-        return 0;
-      }
-      return a.lowerBoundIncluded ? -1 : 1;
-    });
-
+    if (!isSorted) {
+      modifiedIntervals.sort((a, b) => {
+        const delta = a.lowerBound - b.lowerBound;
+        if (delta !== 0) {
+          return delta;
+        }
+        if (a.lowerBoundIncluded === b.lowerBoundIncluded) {
+          return 0;
+        }
+        return a.lowerBoundIncluded ? -1 : 1;
+      });
+    }
     modifiedIntervals = modifiedIntervals.reduce<Interval[]>(
       (prev, current) => {
         if (!prev.length) {
@@ -189,13 +209,6 @@ export class NumberSet {
       }
     }
     return false;
-
-    // for (const i of this.intervals) {
-    //   if (i.contains(x)) {
-    //     return true;
-    //   }
-    // }
-    // return false;
   }
 
   /**
@@ -205,8 +218,20 @@ export class NumberSet {
    * all elements included in `one` of the source sets
    */
   union(other: NumberSet): NumberSet {
-    // TODO we can cheaply sort here
-    return new NumberSet([...this.intervals, ...other.intervals]);
+    // sort the intervals to help the sorting in NumberSet._normalize
+    const sorted: Interval[] = [];
+    let [i, j] = [0, 0];
+    while (i < this.intervals.length && j < other.intervals.length) {
+      if (this.intervals[i].lowerBound <= other.intervals[j].lowerBound) {
+        sorted.push(this.intervals[i++]);
+      } else {
+        sorted.push(other.intervals[j++]);
+      }
+    }
+    sorted.push(...this.intervals.slice(i));
+    sorted.push(...other.intervals.slice(j));
+
+    return new NumberSet(sorted, IntervalState.Sorted);
   }
 
   /**
@@ -216,13 +241,14 @@ export class NumberSet {
    * is not empty
    */
   intersects(other: NumberSet): boolean {
-    // TODO see if we can increase performance
-    for (const i of this.intervals) {
-      for (const j of other.intervals) {
-        if (i.intersects(j)) {
-          return true;
-        }
+    let [i, j] = [0, 0];
+    while (i < this.intervals.length && j < other.intervals.length) {
+      if (this.intervals[i].intersects(other.intervals[j])) {
+        return true;
       }
+      // TODO <= ?
+
+      this.intervals[i].upperBound < other.intervals[j].upperBound ? ++i : ++j;
     }
     return false;
   }
@@ -234,11 +260,18 @@ export class NumberSet {
    * all elements included in `both` of the source sets
    */
   intersection(other: NumberSet): NumberSet {
-    // TODO see if we can increase performance
-    const intersections = this.intervals.flatMap((i) =>
-      other.intervals.map((j) => i.intersection(j))
-    );
-    return new NumberSet(intersections);
+    const intersections: Interval[] = [];
+    let [i, j] = [0, 0];
+    while (i < this.intervals.length && j < other.intervals.length) {
+      const [I, J] = [this.intervals[i], other.intervals[j]];
+      if (I.intersects(J)) {
+        intersections.push(I.intersection(J));
+      }
+      // TODO <= ?
+      this.intervals[i].upperBound < other.intervals[j].upperBound ? ++i : ++j;
+    }
+
+    return new NumberSet(intersections, IntervalState.Normalized);
   }
 
   /**
@@ -248,25 +281,61 @@ export class NumberSet {
    *  containing all elements included in `this` and not in other
    */
   without(other: NumberSet): NumberSet {
-    // TODO see if we can increase performance
-    if (other.isEmpty()) {
-      return this;
+    const result: Interval[] = [];
+    let [i, j] = [0, 0];
+    // TODO rewrite with nextI() and nextJ
+    while (i < this.intervals.length) {
+      let I = this.intervals[i++];
+      while (j < other.intervals.length) {
+        const J = other.intervals[j];
+        if (I.intersects(J)) {
+          const diff = I.without(J).intervals;
+          if (diff.length === 0) {
+            /*  I  xx ?
+                J _____ 
+                we need the next I */
+            break;
+          } else if (diff.length === 1) {
+            I = diff[0];
+            if (I.upperBound <= J.lowerBound) {
+              /*  I ___x ?
+                  J    ___ 
+                  we need the next I */
+              result.push(I);
+              break;
+            }
+            /*  I   x___
+                J ___ ?
+                we need the next J */
+          } else if (diff.length === 2) {
+            /*  I  __xx__
+                J    __ ?
+                we need the next J */
+            result.push(diff[0]);
+            I = diff[1];
+          }
+        } else {
+          if (I.upperBound <= J.lowerBound) {
+            /*  I ___ ?
+                J     ___ 
+                we need the next I */
+            result.push(I);
+            break;
+          }
+          /*  I     ___
+              J ___ ?    
+              we need the next J */
+        }
+        ++j;
+      }
+      if (j === other.intervals.length) {
+        result.push(I);
+        break;
+      }
     }
 
-    /* 
-    We intentionally write the term without function calls on other
-    to avoid mixing the interval's number transforms
-    */
-    const difference = this.intervals.flatMap(
-      (
-        minuend // =: M
-      ) =>
-        other.intervals // =: S1,...,Sn
-          .map((subtrahend) => minuend.without(subtrahend)) // -> M\S1,...,M\Sn
-          .reduce((prev, current) => prev.intersection(current)).intervals // -> M\S1 ∩...∩ M\Sn
-    );
-
-    return new NumberSet(difference);
+    result.push(...this.intervals.slice(i));
+    return new NumberSet(result, IntervalState.Normalized);
   }
 
   /**
@@ -276,10 +345,17 @@ export class NumberSet {
    *  containing all elements included in `exactly` one of the sets
    */
   symDiff(other: NumberSet): NumberSet {
+    // TODO see if we can increase performance
+
     /* 
     We intentionally write the term without function calls on other
     to avoid mixing number transforms
     */
     return this.union(other).without(this.intersection(other));
   }
+}
+
+enum IntervalState {
+  Sorted,
+  Normalized,
 }

@@ -143,7 +143,7 @@ export class Interval {
    * @returns NumberSet equivalent to this {@link Interval}
    */
   toSet(): NumberSet {
-    return new NumberSet([this]);
+    return NumberSet.from([this]);
   }
 
   /**
@@ -193,7 +193,7 @@ export class Interval {
    */
   union(other: Interval): NumberSet {
     if (!this.intersects(other)) {
-      return new NumberSet([this, other]);
+      return NumberSet.from([this, other]);
     }
     const getLowerBound: () => [number, boolean] = () => {
       if (this.lowerBound < other.lowerBound) {
@@ -225,7 +225,7 @@ export class Interval {
     };
     const [upperBound, upperBoundIncluded] = getUpperBound();
 
-    return new NumberSet([
+    return NumberSet.from([
       new Interval({
         lowerBound,
         upperBound,
@@ -312,7 +312,7 @@ export class Interval {
    */
   without(other: Interval): NumberSet {
     if (!this.intersects(other)) {
-      return new NumberSet([this]);
+      return NumberSet.from([this]);
     }
     const intersection = this.intersection(other);
     const lower = new Interval({
@@ -329,7 +329,7 @@ export class Interval {
       upperBoundIncluded: this.upperBoundIncluded,
       numberTransform: this.numberTransform,
     });
-    return new NumberSet([lower, upper].filter((i) => !i.isEmpty()));
+    return NumberSet.from([lower, upper].filter((i) => !i.isEmpty()));
   }
   /**
    *
