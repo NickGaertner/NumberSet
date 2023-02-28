@@ -355,6 +355,10 @@ export class NumberSet {
   }
 }
 
+// TODO get rid of doc warning
+/**
+ * @internal
+ */
 enum IntervalState {
   Sorted,
   Normalized,
