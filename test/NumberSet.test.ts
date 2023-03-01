@@ -27,6 +27,27 @@ test('normalize', () => {
       Outlier,
     ])
   ).toEqual(NumberSet.from([Closed, Outlier]));
+
+  expect(NumberSet.from([OpenLower, Middle, OpenUpper]).intervals).toEqual([
+    Open,
+  ]);
+  expect(NumberSet.from([OpenUpper, Middle, OpenLower]).intervals).toEqual([
+    Open,
+  ]);
+
+  expect(
+    NumberSet.from([BottomClosedLower, Middle, TopClosedUpper]).intervals
+  ).toEqual([Closed]);
+  expect(
+    NumberSet.from([TopClosedUpper, Middle, BottomClosedLower]).intervals
+  ).toEqual([Closed]);
+
+  expect(NumberSet.from([ClosedLower, Middle, ClosedUpper]).intervals).toEqual([
+    Closed,
+  ]);
+  expect(NumberSet.from([ClosedUpper, Middle, ClosedLower]).intervals).toEqual([
+    Closed,
+  ]);
 });
 
 test('toString', () => {
@@ -102,10 +123,47 @@ test('union', () => {
     NumberSet.from([ClosedLower]).union(NumberSet.from([ClosedUpper]))
   ).toEqual(NumberSet.from([Closed]));
   expect(
+    NumberSet.from([ClosedUpper]).union(NumberSet.from([ClosedLower]))
+  ).toEqual(NumberSet.from([Closed]));
+
+  expect(
     NumberSet.from([TopClosedLower]).union(
       NumberSet.from([BottomClosedUpper, Outlier])
     )
   ).toEqual(NumberSet.from([Open, Outlier]));
+  expect(
+    NumberSet.from([BottomClosedUpper, Outlier]).union(
+      NumberSet.from([TopClosedLower])
+    )
+  ).toEqual(NumberSet.from([Open, Outlier]));
+
+  expect(
+    NumberSet.from([BottomClosedLower]).union(NumberSet.from([OpenLower]))
+  ).toEqual(NumberSet.from([BottomClosedLower]));
+  expect(
+    NumberSet.from([OpenLower]).union(NumberSet.from([BottomClosedLower]))
+  ).toEqual(NumberSet.from([BottomClosedLower]));
+
+  expect(
+    NumberSet.from([TopClosedLower]).union(NumberSet.from([OpenLower]))
+  ).toEqual(NumberSet.from([TopClosedLower]));
+  expect(
+    NumberSet.from([OpenLower]).union(NumberSet.from([TopClosedLower]))
+  ).toEqual(NumberSet.from([TopClosedLower]));
+
+  expect(NumberSet.from([Middle]).union(NumberSet.from([OpenLower]))).toEqual(
+    NumberSet.from([TopClosedLower])
+  );
+  expect(NumberSet.from([OpenLower]).union(NumberSet.from([Middle]))).toEqual(
+    NumberSet.from([TopClosedLower])
+  );
+
+  expect(NumberSet.from([Middle]).union(NumberSet.from([OpenUpper]))).toEqual(
+    NumberSet.from([BottomClosedUpper])
+  );
+  expect(NumberSet.from([OpenUpper]).union(NumberSet.from([Middle]))).toEqual(
+    NumberSet.from([BottomClosedUpper])
+  );
 });
 
 test('intersects', () => {

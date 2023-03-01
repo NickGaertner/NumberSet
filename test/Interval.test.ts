@@ -94,24 +94,47 @@ test('union', () => {
 });
 
 test('intersects', () => {
+  expect(EmptyOpenPoint.intersects(Closed)).toBeFalsy();
+  expect(Closed.intersects(EmptyOpenPoint)).toBeFalsy();
+  expect(EmptyCrossed.intersects(Closed)).toBeFalsy();
+  expect(Closed.intersects(EmptyCrossed)).toBeFalsy();
+
   expect(Closed.intersects(Closed)).toBeTruthy();
+  expect(BottomClosed.intersects(Closed)).toBeTruthy();
+  expect(Closed.intersects(BottomClosed)).toBeTruthy();
+  expect(TopClosed.intersects(Closed)).toBeTruthy();
+  expect(Closed.intersects(TopClosed)).toBeTruthy();
+  expect(Open.intersects(Closed)).toBeTruthy();
+  expect(Closed.intersects(Open)).toBeTruthy();
   expect(Open.intersects(Open)).toBeTruthy();
+
   expect(ClosedLower.intersects(ClosedUpper)).toBeTruthy();
   expect(ClosedUpper.intersects(ClosedLower)).toBeTruthy();
   expect(TopClosedLower.intersects(BottomClosedUpper)).toBeTruthy();
   expect(BottomClosedUpper.intersects(TopClosedLower)).toBeTruthy();
   expect(OpenLower.intersects(OpenUpper)).toBeFalsy();
-  expect(Closed.intersects(EmptyOpenPoint)).toBeFalsy();
 });
 
 test('intersection', () => {
+  expect(EmptyOpenPoint.intersection(Closed)).toEqual(EmptyOpenPoint);
+  expect(Closed.intersection(EmptyOpenPoint)).toEqual(EmptyOpenPoint);
+  expect(EmptyCrossed.intersection(Closed)).toEqual(EmptyOpenPoint);
+  expect(Closed.intersection(EmptyCrossed)).toEqual(EmptyOpenPoint);
+
   expect(Closed.intersection(Closed)).toEqual(Closed);
+  expect(BottomClosed.intersection(Closed)).toEqual(BottomClosed);
+  expect(Closed.intersection(BottomClosed)).toEqual(BottomClosed);
+  expect(TopClosed.intersection(Closed)).toEqual(TopClosed);
+  expect(Closed.intersection(TopClosed)).toEqual(TopClosed);
+  expect(Open.intersection(Closed)).toEqual(Open);
   expect(Closed.intersection(Open)).toEqual(Open);
+  expect(Open.intersection(Open)).toEqual(Open);
+
   expect(ClosedLower.intersection(ClosedUpper)).toEqual(Middle);
+  expect(ClosedUpper.intersection(ClosedLower)).toEqual(Middle);
   expect(TopClosedLower.intersection(BottomClosedUpper)).toEqual(Middle);
   expect(BottomClosedUpper.intersection(TopClosedLower)).toEqual(Middle);
-  expect(OpenLower.intersection(OpenUpper)).toEqual(EmptyCrossed);
-  expect(Closed.intersection(EmptyOpenPoint)).toEqual(EmptyCrossed);
+  expect(OpenLower.intersection(OpenUpper)).toEqual(EmptyOpenPoint);
 });
 
 test('without', () => {
@@ -127,7 +150,13 @@ test('symDiff', () => {
   expect(ClosedLower.symDiff(ClosedUpper)).toEqual(
     NumberSet.from([BottomClosedLower, TopClosedUpper])
   );
+  expect(ClosedUpper.symDiff(ClosedLower)).toEqual(
+    NumberSet.from([BottomClosedLower, TopClosedUpper])
+  );
   expect(OpenLower.symDiff(OpenUpper)).toEqual(
+    NumberSet.from([OpenLower, OpenUpper])
+  );
+  expect(OpenUpper.symDiff(OpenLower)).toEqual(
     NumberSet.from([OpenLower, OpenUpper])
   );
 });

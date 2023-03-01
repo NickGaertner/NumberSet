@@ -3,7 +3,7 @@ import { Interval, NumberSet } from '../src';
 
 // Empty
 export const EmptyOpenPoint = Interval.Open(0, 0);
-export const EmptyCrossed = Interval.Closed(1, -1);
+export const EmptyCrossed = Interval.Closed(0.5, -0.5);
 
 // -1 to 1
 export const Closed = Interval.Closed(-1, 1);
@@ -16,6 +16,7 @@ export const ClosedLower = Interval.Closed(-1, 0);
 export const TopClosedLower = Interval.TopClosed(-1, 0);
 export const BottomClosedLower = Interval.BottomClosed(-1, 0);
 export const OpenLower = Interval.Open(-1, 0);
+
 // and 0 to 1
 export const ClosedUpper = Interval.Closed(0, 1);
 export const TopClosedUpper = Interval.TopClosed(0, 1);

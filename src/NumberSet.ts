@@ -12,7 +12,6 @@ import { Interval, ParseError } from '.';
  * {@link NumberTransform}._
  *
  */
-
 export class NumberSet {
   readonly intervals: ReadonlyArray<Interval>;
 
@@ -58,6 +57,7 @@ export class NumberSet {
     if (modifiedIntervals.length === 0) {
       return modifiedIntervals;
     }
+
     if (!isSorted) {
       modifiedIntervals.sort((a, b) => {
         const delta = a.lowerBound - b.lowerBound;
@@ -76,7 +76,10 @@ export class NumberSet {
           return [current];
         }
         const last = prev[prev.length - 1];
-        if (last.intersects(current)) {
+        if (last.touches(current)) {
+          // Beware: Interval.union tries to construct a NumberSet of two intervals
+          // if the intervals don't touch. If we don't check the touching
+          // condition as above, we have an infinite loop
           const union = last.union(current).intervals[0];
           prev[prev.length - 1] = union;
         } else {
@@ -141,6 +144,7 @@ export class NumberSet {
       .slice(1, -1)
       .split(', ')
       .filter((t) => t.length);
+    // TODO try catch and then throw more specific error
     const intervals: Interval[] = intervalReps.map((rep) =>
       Interval.fromString(rep)
     );
@@ -205,6 +209,7 @@ export class NumberSet {
       } else if (interval.upperBound < x) {
         l = m + 1;
       } else {
+        // possible because of the normalized intervals array
         return interval.contains(x);
       }
     }
@@ -222,7 +227,11 @@ export class NumberSet {
     const sorted: Interval[] = [];
     let [i, j] = [0, 0];
     while (i < this.intervals.length && j < other.intervals.length) {
-      if (this.intervals[i].lowerBound <= other.intervals[j].lowerBound) {
+      if (
+        this.intervals[i].lowerBound < other.intervals[j].lowerBound ||
+        (this.intervals[i].lowerBoundIncluded &&
+          this.intervals[i].lowerBound === other.intervals[j].lowerBound)
+      ) {
         sorted.push(this.intervals[i++]);
       } else {
         sorted.push(other.intervals[j++]);
@@ -233,6 +242,8 @@ export class NumberSet {
 
     return new NumberSet(sorted, IntervalState.Sorted);
   }
+
+  // TODO touches for sets?
 
   /**
    *
@@ -246,9 +257,9 @@ export class NumberSet {
       if (this.intervals[i].intersects(other.intervals[j])) {
         return true;
       }
-      // TODO <= ?
-
-      this.intervals[i].upperBound < other.intervals[j].upperBound ? ++i : ++j;
+      // TODO test case for equality
+      // TODO think this through
+      this.intervals[i].upperBound <= other.intervals[j].lowerBound ? ++i : ++j;
     }
     return false;
   }
@@ -267,8 +278,10 @@ export class NumberSet {
       if (I.intersects(J)) {
         intersections.push(I.intersection(J));
       }
-      // TODO <= ?
-      this.intervals[i].upperBound < other.intervals[j].upperBound ? ++i : ++j;
+      // TODO <= ? We need to check bound inclusion here i guess
+      // (0,1) intersects [0,1] but what?
+      // TODO think this through
+      this.intervals[i].lowerBound < other.intervals[j].lowerBound ? ++i : ++j;
     }
 
     return new NumberSet(intersections, IntervalState.Normalized);
@@ -283,7 +296,6 @@ export class NumberSet {
   without(other: NumberSet): NumberSet {
     const result: Interval[] = [];
     let [i, j] = [0, 0];
-    // TODO rewrite with nextI() and nextJ
     while (i < this.intervals.length) {
       let I = this.intervals[i++];
       while (j < other.intervals.length) {

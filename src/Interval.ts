@@ -192,7 +192,7 @@ export class Interval {
    * @returns The union of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in `either` of the source {@link Interval}s
    */
   union(other: Interval): NumberSet {
-    if (!this.intersects(other)) {
+    if (!this.touches(other)) {
       return NumberSet.from([this, other]);
     }
     const getLowerBound: () => [number, boolean] = () => {
@@ -236,6 +236,28 @@ export class Interval {
     ]);
   }
 
+  // TODO unit tests
+  /**
+   *
+   * @param other - {@link Interval}
+   * @returns True if the {@link Interval}'s union is connected
+   */
+  touches(other: Interval): boolean {
+    if (this.isEmpty() || other.isEmpty()) {
+      return false;
+    }
+    const cond0 =
+      this.lowerBound < other.upperBound ||
+      ((this.lowerBoundIncluded || other.upperBoundIncluded) &&
+        this.lowerBound === other.upperBound);
+
+    const cond1 =
+      other.lowerBound < this.upperBound ||
+      ((other.lowerBoundIncluded || this.upperBoundIncluded) &&
+        other.lowerBound === this.upperBound);
+    return cond0 && cond1;
+  }
+
   /**
    *
    * @param other - {@link Interval} to check for overlap
@@ -245,15 +267,17 @@ export class Interval {
     if (this.isEmpty() || other.isEmpty()) {
       return false;
     }
-
     const cond0 =
-      this.lowerBoundIncluded && other.upperBoundIncluded
-        ? this.lowerBound <= other.upperBound
-        : this.lowerBound < other.upperBound;
+      this.lowerBound < other.upperBound ||
+      (this.lowerBoundIncluded &&
+        other.upperBoundIncluded &&
+        this.lowerBound === other.upperBound);
+
     const cond1 =
-      other.lowerBoundIncluded && this.upperBoundIncluded
-        ? other.lowerBound <= this.upperBound
-        : other.lowerBound < this.upperBound;
+      other.lowerBound < this.upperBound ||
+      (other.lowerBoundIncluded &&
+        this.upperBoundIncluded &&
+        other.lowerBound === this.upperBound);
     return cond0 && cond1;
   }
 
@@ -311,6 +335,7 @@ export class Interval {
    * @returns The difference of both {@link Interval}s, e.g. a new {@link Interval} containing all elements included in `this` and not in other
    */
   without(other: Interval): NumberSet {
+    // allows us especially to ignore empty intervals
     if (!this.intersects(other)) {
       return NumberSet.from([this]);
     }
