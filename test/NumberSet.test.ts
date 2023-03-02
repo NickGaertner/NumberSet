@@ -107,15 +107,14 @@ test('equals', () => {
 });
 
 test('contains', () => {
-  const indexes = Array.from({ length: 1000 }, (n, i) => i);
-  const largeSet = NumberSet.from(indexes.map((i) => Interval.Open(i, i + 1)));
-  const start = performance.now();
-
-  indexes.forEach((i) => {
-    expect(largeSet.contains(i)).toBeFalsy();
-    expect(largeSet.contains(i + 0.5)).toBeTruthy();
-  });
-  console.log('********** TIME:', performance.now() - start);
+  const set = NumberSet.from([OpenLower, OpenUpper]);
+  expect(set.contains(-2)).toBeFalsy();
+  expect(set.contains(-1)).toBeFalsy();
+  expect(set.contains(-0.5)).toBeTruthy();
+  expect(set.contains(0)).toBeFalsy();
+  expect(set.contains(0.5)).toBeTruthy();
+  expect(set.contains(1)).toBeFalsy();
+  expect(set.contains(2)).toBeFalsy();
 });
 
 test('union', () => {
@@ -171,14 +170,49 @@ test('intersects', () => {
     NumberSet.from([ClosedLower]).intersects(NumberSet.from([ClosedUpper]))
   ).toBeTruthy();
   expect(
+    NumberSet.from([ClosedUpper]).intersects(NumberSet.from([ClosedLower]))
+  ).toBeTruthy();
+
+  expect(
+    NumberSet.from([ClosedLower]).intersects(NumberSet.from([OpenUpper]))
+  ).toBeFalsy();
+  expect(
+    NumberSet.from([OpenUpper]).intersects(NumberSet.from([ClosedLower]))
+  ).toBeFalsy();
+
+  expect(
     NumberSet.from([OpenLower]).intersects(NumberSet.from([OpenUpper]))
   ).toBeFalsy();
   expect(
     NumberSet.from([OpenLower, Outlier]).intersects(NumberSet.from([OpenUpper]))
   ).toBeFalsy();
+
   expect(
-    NumberSet.from([OpenLower, Outlier]).intersects(
-      NumberSet.from([OpenUpper, Outlier])
+    NumberSet.from([OpenLower, OpenUpper]).intersects(NumberSet.from([Middle]))
+  ).toBeFalsy();
+  expect(
+    NumberSet.from([Middle]).intersects(NumberSet.from([OpenLower, OpenUpper]))
+  ).toBeFalsy();
+
+  expect(
+    NumberSet.from([OpenLower, ClosedUpper]).intersects(
+      NumberSet.from([Middle])
+    )
+  ).toBeTruthy();
+  expect(
+    NumberSet.from([Middle]).intersects(
+      NumberSet.from([OpenLower, ClosedUpper])
+    )
+  ).toBeTruthy();
+
+  expect(
+    NumberSet.from([ClosedLower, OpenUpper]).intersects(
+      NumberSet.from([Middle])
+    )
+  ).toBeTruthy();
+  expect(
+    NumberSet.from([Middle]).intersects(
+      NumberSet.from([ClosedLower, OpenUpper])
     )
   ).toBeTruthy();
 });

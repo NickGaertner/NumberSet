@@ -39,12 +39,12 @@ export class Interval {
    * @remarks
    * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead for convenience
    *
-   * @param lowerBound - The interval's lower endpoint
-   * @param upperBound - The interval's upper endpoint
+   * @param lowerBound - The {@link Interval}'s lower endpoint
+   * @param upperBound - The {@link Interval}'s upper endpoint
    * @param lowerBoundIncluded - Indicates wether {@link lowerBound} should be included
    * @param upperBoundIncluded -Indicates wether {@link upperBound} should be included
    * @param numberTransform - Transform function applied to the bounds and propagated
-   * to new intervals created by member functions
+   * to new {@link Interval}s created by member functions
    */
   constructor({
     lowerBound,
@@ -236,11 +236,10 @@ export class Interval {
     ]);
   }
 
-  // TODO unit tests
   /**
    *
    * @param other - {@link Interval}
-   * @returns True if the {@link Interval}'s union is connected
+   * @returns True if the {@link Interval}'s union is connected, e.g. their union is an interval
    */
   touches(other: Interval): boolean {
     if (this.isEmpty() || other.isEmpty()) {
@@ -356,6 +355,7 @@ export class Interval {
     });
     return NumberSet.from([lower, upper].filter((i) => !i.isEmpty()));
   }
+
   /**
    *
    * @param other -
@@ -367,6 +367,124 @@ export class Interval {
     to avoid mixing number transforms
     */
     return this.union(other).without(this.intersection(other).toSet());
+  }
+
+  /**
+   *
+   * @returns The {@link Interval}'s interior (the {@link Interval} without its endpoints)
+   */
+  interior(): Interval {
+    return Interval.Open(
+      this.lowerBound,
+      this.upperBound,
+      this.numberTransform
+    );
+  }
+
+  /**
+   *
+   * @returns The {@link Interval}'s closure (the {@link Interval} with its endpoints included)
+   * if it's not empty, the {@link Interval} itself otherwise
+   */
+  closure(): Interval {
+    if (this.isEmpty()) {
+      return this;
+    }
+    return Interval.Closed(
+      this.lowerBound,
+      this.upperBound,
+      this.numberTransform
+    );
+  }
+
+  /**
+   *
+   * @returns The {@link Interval}'s diameter(/length/width)
+   */
+  diameter(): number {
+    if (this.isEmpty()) {
+      return 0;
+    }
+    return this.upperBound - this.lowerBound;
+  }
+
+  /**
+   *
+   * @returns The {@link Interval}'s radius(diameter/2)
+   */
+  radius(): number {
+    return this.diameter() / 2.0;
+  }
+
+  /**
+   *
+   * @returns The {@link Interval}'s center(midpoint) if it exists
+   * and NaN if the {@link Interval} is empty
+   */
+  center(): number {
+    if (this.isEmpty()) {
+      return NaN;
+    }
+    return (this.upperBound + this.lowerBound) / 2.0;
+  }
+
+  /**
+   *
+   * @param offset - offset to apply to the {@link Interval}
+   * @returns The {@link Interval} translated by the offset
+   */
+  translateBy(offset: number): Interval {
+    return new Interval({
+      lowerBound: this.lowerBound + offset,
+      upperBound: this.upperBound + offset,
+      lowerBoundIncluded: this.lowerBoundIncluded,
+      upperBoundIncluded: this.upperBoundIncluded,
+      numberTransform: this.numberTransform,
+    });
+  }
+
+  /**
+   * Alias for ${@link Interval.translateBy}
+   *
+   * @param offset -
+   * @returns
+   */
+  add(offset: number): Interval {
+    return this.translateBy(offset);
+  }
+
+  /**
+   *
+   * @example
+   * ``` ts
+   * Interval.Closed(0,1).scaleBy(-2) // "[-2,0]"
+   * ```
+   *
+   * @param factor - scale factor
+   * @returns The {@link Interval} scaled by factor
+   */
+  scaleBy(factor: number): Interval {
+    const [lowerBound, upperBound] =
+      0 <= factor
+        ? [this.lowerBound * factor, this.upperBound * factor]
+        : [this.upperBound * factor, this.lowerBound * factor];
+    return new Interval({
+      lowerBound,
+      upperBound,
+      lowerBoundIncluded: this.lowerBoundIncluded,
+      upperBoundIncluded: this.upperBoundIncluded,
+      numberTransform: this.numberTransform,
+    });
+  }
+
+  /**
+   * Alias for ${@link Interval.scaleBy}
+   *
+   * @param factor -
+   * @returns
+   */
+  multiply(factor: number): Interval {
+    return this.scaleBy(factor);
   }
 
   /* Aliases for constructing new intervals*/

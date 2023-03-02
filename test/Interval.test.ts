@@ -93,6 +93,38 @@ test('union', () => {
   expect(Middle.union(Outlier)).toEqual(NumberSet.from([Middle, Outlier]));
 });
 
+test('touches', () => {
+  expect(EmptyOpenPoint.touches(Closed)).toBeFalsy();
+  expect(Closed.touches(EmptyOpenPoint)).toBeFalsy();
+  expect(EmptyCrossed.touches(Closed)).toBeFalsy();
+  expect(Closed.touches(EmptyCrossed)).toBeFalsy();
+
+  expect(Closed.touches(Closed)).toBeTruthy();
+  expect(BottomClosed.touches(Closed)).toBeTruthy();
+  expect(Closed.touches(BottomClosed)).toBeTruthy();
+  expect(TopClosed.touches(Closed)).toBeTruthy();
+  expect(Closed.touches(TopClosed)).toBeTruthy();
+  expect(Open.touches(Closed)).toBeTruthy();
+  expect(Closed.touches(Open)).toBeTruthy();
+  expect(Open.touches(Open)).toBeTruthy();
+
+  expect(ClosedLower.touches(ClosedUpper)).toBeTruthy();
+  expect(ClosedUpper.touches(ClosedLower)).toBeTruthy();
+  expect(TopClosedLower.touches(BottomClosedUpper)).toBeTruthy();
+  expect(BottomClosedUpper.touches(TopClosedLower)).toBeTruthy();
+  expect(OpenLower.touches(BottomClosedUpper)).toBeTruthy();
+  expect(BottomClosedUpper.touches(OpenLower)).toBeTruthy();
+  expect(OpenUpper.touches(TopClosedLower)).toBeTruthy();
+  expect(TopClosedLower.touches(OpenUpper)).toBeTruthy();
+  expect(OpenUpper.touches(OpenLower)).toBeFalsy();
+  expect(OpenLower.touches(OpenUpper)).toBeFalsy();
+
+  expect(OpenLower.touches(Middle)).toBeTruthy();
+  expect(Middle.touches(OpenLower)).toBeTruthy();
+  expect(OpenUpper.touches(Middle)).toBeTruthy();
+  expect(Middle.touches(OpenUpper)).toBeTruthy();
+});
+
 test('intersects', () => {
   expect(EmptyOpenPoint.intersects(Closed)).toBeFalsy();
   expect(Closed.intersects(EmptyOpenPoint)).toBeFalsy();
@@ -112,6 +144,11 @@ test('intersects', () => {
   expect(ClosedUpper.intersects(ClosedLower)).toBeTruthy();
   expect(TopClosedLower.intersects(BottomClosedUpper)).toBeTruthy();
   expect(BottomClosedUpper.intersects(TopClosedLower)).toBeTruthy();
+  expect(OpenLower.intersects(BottomClosedUpper)).toBeFalsy();
+  expect(BottomClosedUpper.intersects(OpenLower)).toBeFalsy();
+  expect(OpenUpper.intersects(TopClosedLower)).toBeFalsy();
+  expect(TopClosedLower.intersects(OpenUpper)).toBeFalsy();
+  expect(OpenUpper.intersects(OpenLower)).toBeFalsy();
   expect(OpenLower.intersects(OpenUpper)).toBeFalsy();
 });
 
@@ -174,6 +211,115 @@ test('fromString', () => {
   expect(() => Interval.fromString('{0,0}')).toThrowError(ParseError);
   expect(() => Interval.fromString('[NaN,0]')).toThrowError(ParseError);
   expect(() => Interval.fromString('[0,NaN]')).toThrowError(ParseError);
+});
+
+test('translateBy', () => {
+  expect(Closed.translateBy(1)).toEqual(Closed.add(1));
+  expect(Closed.translateBy(0)).toEqual(Closed);
+  expect(Closed.translateBy(Infinity)).toEqual(Inf());
+  expect(EmptyCrossed.translateBy(1)).toEqual(EmptyCrossed);
+
+  expect(ClosedLower.translateBy(1)).toEqual(ClosedUpper);
+  expect(ClosedUpper.translateBy(-1)).toEqual(ClosedLower);
+
+  expect(OpenLower.translateBy(1)).toEqual(OpenUpper);
+  expect(OpenUpper.translateBy(-1)).toEqual(OpenLower);
+
+  expect(BottomClosedLower.translateBy(1)).toEqual(BottomClosedUpper);
+  expect(BottomClosedUpper.translateBy(-1)).toEqual(BottomClosedLower);
+
+  expect(TopClosedLower.translateBy(1)).toEqual(TopClosedUpper);
+  expect(TopClosedUpper.translateBy(-1)).toEqual(TopClosedLower);
+});
+
+test('scaleBy', () => {
+  expect(Closed.scaleBy(2)).toEqual(Closed.multiply(2));
+  expect(ClosedUpper.scaleBy(2)).toEqual(Interval.Closed(0, 2));
+  expect(Closed.scaleBy(1)).toEqual(Closed);
+  expect(Closed.scaleBy(0)).toEqual(Middle);
+  expect(Closed.scaleBy(Infinity)).toEqual(RealWithInf());
+  expect(EmptyCrossed.scaleBy(2)).toEqual(EmptyCrossed);
+  expect(Open.scaleBy(0)).toEqual(EmptyCrossed);
+
+  expect(ClosedUpper.scaleBy(-1)).toEqual(ClosedLower);
+  expect(OpenUpper.scaleBy(-1)).toEqual(OpenLower);
+  expect(TopClosedUpper.scaleBy(-1)).toEqual(TopClosedLower);
+  expect(BottomClosedUpper.scaleBy(-1)).toEqual(BottomClosedLower);
+
+  expect(ClosedLower.scaleBy(-1)).toEqual(ClosedUpper);
+  expect(OpenLower.scaleBy(-1)).toEqual(OpenUpper);
+  expect(TopClosedLower.scaleBy(-1)).toEqual(TopClosedUpper);
+  expect(BottomClosedLower.scaleBy(-1)).toEqual(BottomClosedUpper);
+
+  expect(Interval.Closed(-0.5, 0.5).scaleBy(2)).toEqual(Closed);
+  expect(Interval.Open(-0.5, 0.5).scaleBy(2)).toEqual(Open);
+  expect(Interval.BottomClosed(-0.5, 0.5).scaleBy(2)).toEqual(BottomClosed);
+  expect(Interval.TopClosed(-0.5, 0.5).scaleBy(2)).toEqual(TopClosed);
+
+  expect(Interval.Closed(-0.5, 0.5).scaleBy(-2)).toEqual(Closed);
+  expect(Interval.Open(-0.5, 0.5).scaleBy(-2)).toEqual(Open);
+  expect(Interval.BottomClosed(-0.5, 0.5).scaleBy(-2)).toEqual(BottomClosed);
+  expect(Interval.TopClosed(-0.5, 0.5).scaleBy(-2)).toEqual(TopClosed);
+
+  expect(Closed.scaleBy(0.5)).toEqual(Interval.Closed(-0.5, 0.5));
+  expect(Open.scaleBy(0.5)).toEqual(Interval.Open(-0.5, 0.5));
+  expect(BottomClosed.scaleBy(0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
+  expect(TopClosed.scaleBy(0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
+
+  expect(Closed.scaleBy(-0.5)).toEqual(Interval.Closed(-0.5, 0.5));
+  expect(Open.scaleBy(-0.5)).toEqual(Interval.Open(-0.5, 0.5));
+  expect(BottomClosed.scaleBy(-0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
+  expect(TopClosed.scaleBy(-0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
+});
+
+test('interior', () => {
+  expect(Closed.interior()).toEqual(Open);
+  expect(TopClosed.interior()).toEqual(Open);
+  expect(BottomClosed.interior()).toEqual(Open);
+  expect(Open.interior()).toEqual(Open);
+  expect(EmptyCrossed.interior()).toEqual(EmptyCrossed);
+});
+
+test('closure', () => {
+  expect(Closed.closure()).toEqual(Closed);
+  expect(TopClosed.closure()).toEqual(Closed);
+  expect(BottomClosed.closure()).toEqual(Closed);
+  expect(Open.closure()).toEqual(Closed);
+  expect(EmptyCrossed.closure()).toEqual(EmptyCrossed);
+});
+
+test('diameter & radius', () => {
+  expect(Interval.Closed(0, 1).diameter()).toEqual(1);
+  expect(Interval.TopClosed(0, 1).diameter()).toEqual(1);
+  expect(Interval.BottomClosed(0, 1).diameter()).toEqual(1);
+  expect(Interval.Open(0, 1).diameter()).toEqual(1);
+  expect(EmptyCrossed.diameter()).toEqual(0);
+
+  expect(Interval.Closed(0, 2).radius()).toEqual(1);
+  expect(Interval.TopClosed(0, 2).radius()).toEqual(1);
+  expect(Interval.BottomClosed(0, 2).radius()).toEqual(1);
+  expect(Interval.Open(0, 2).radius()).toEqual(1);
+  expect(EmptyCrossed.radius()).toEqual(0);
+
+  expect(Interval.Closed(0, 1).diameter()).toEqual(
+    Interval.Closed(0, 2).radius()
+  );
+  expect(Interval.TopClosed(0, 1).diameter()).toEqual(
+    Interval.TopClosed(0, 2).radius()
+  );
+  expect(Interval.BottomClosed(0, 1).diameter()).toEqual(
+    Interval.BottomClosed(0, 2).radius()
+  );
+  expect(Interval.Open(0, 1).diameter()).toEqual(Interval.Open(0, 2).radius());
+  expect(EmptyCrossed.diameter()).toEqual(EmptyCrossed.radius());
+});
+
+test('center', () => {
+  expect(Closed.center()).toEqual(0);
+  expect(TopClosed.center()).toEqual(0);
+  expect(BottomClosed.center()).toEqual(0);
+  expect(Open.center()).toEqual(0);
+  expect(EmptyCrossed.center()).toEqual(NaN);
 });
 
 test('infinity & predefined intervals', () => {

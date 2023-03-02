@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { Interval, ParseError } from '.';
 
 /**
@@ -79,7 +78,7 @@ export class NumberSet {
         if (last.touches(current)) {
           // Beware: Interval.union tries to construct a NumberSet of two intervals
           // if the intervals don't touch. If we don't check the touching
-          // condition as above, we have an infinite loop
+          // condition as above, we create an infinite loop
           const union = last.union(current).intervals[0];
           prev[prev.length - 1] = union;
         } else {
@@ -243,8 +242,6 @@ export class NumberSet {
     return new NumberSet(sorted, IntervalState.Sorted);
   }
 
-  // TODO touches for sets?
-
   /**
    *
    * @param other - {@link NumberSet}  to check for intersection
@@ -257,8 +254,6 @@ export class NumberSet {
       if (this.intervals[i].intersects(other.intervals[j])) {
         return true;
       }
-      // TODO test case for equality
-      // TODO think this through
       this.intervals[i].upperBound <= other.intervals[j].lowerBound ? ++i : ++j;
     }
     return false;
@@ -278,10 +273,12 @@ export class NumberSet {
       if (I.intersects(J)) {
         intersections.push(I.intersection(J));
       }
-      // TODO <= ? We need to check bound inclusion here i guess
-      // (0,1) intersects [0,1] but what?
-      // TODO think this through
-      this.intervals[i].lowerBound < other.intervals[j].lowerBound ? ++i : ++j;
+
+      // condition is only right because of the normalization:
+      // if both upper bounds are equal they can't have further intersections
+      // since they would need to intersect at their upper bound; thus, the
+      // interval they would intersect with touches the other interval
+      this.intervals[i].upperBound < other.intervals[j].upperBound ? ++i : ++j;
     }
 
     return new NumberSet(intersections, IntervalState.Normalized);
@@ -309,13 +306,13 @@ export class NumberSet {
             break;
           } else if (diff.length === 1) {
             I = diff[0];
-            if (I.upperBound <= J.lowerBound) {
+            if (I.upperBound == J.lowerBound) {
               /*  I ___x ?
                   J    ___ 
                   we need the next I */
               result.push(I);
               break;
-            }
+            } // I.lowerBound == J.upperBound
             /*  I   x___
                 J ___ ?
                 we need the next J */
@@ -357,7 +354,11 @@ export class NumberSet {
    *  containing all elements included in `exactly` one of the sets
    */
   symDiff(other: NumberSet): NumberSet {
-    // TODO see if we can increase performance
+    /*
+    performance might increase if we do the operation by hand
+    but is the headache really worth? we'd get rid of a readable 
+    one-liner while staying in O(n+m)
+    */
 
     /* 
     We intentionally write the term without function calls on other
