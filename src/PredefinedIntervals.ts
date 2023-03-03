@@ -5,11 +5,6 @@ import { Interval, NumberTransform } from '.';
  */
 export const Empty = (numberTransform?: NumberTransform) =>
   Interval.Open(0, 0, numberTransform);
-/**
- * [Infinity,Infinity]
- */
-export const Inf = (numberTransform?: NumberTransform) =>
-  Interval.Point(Infinity, numberTransform);
 
 /**
  * (-Infinity, Infinity)

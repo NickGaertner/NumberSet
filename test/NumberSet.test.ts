@@ -1,4 +1,4 @@
-import { Inf, Interval, NumberSet, ParseError, RealWithInf } from '../src';
+import { Interval, NumberSet, ParseError } from '../src';
 import {
   BottomClosed,
   BottomClosedLower,
@@ -87,7 +87,7 @@ test('IsEmpty', () => {
 
 test('equals', () => {
   expect(NumberSet.from([])).toEqual(NumberSet.from([]));
-  expect(NumberSet.from([])).not.toEqual(NumberSet.from([Inf()]));
+  expect(NumberSet.from([])).not.toEqual(NumberSet.from([Closed]));
   expect(NumberSet.from([Closed])).toEqual(NumberSet.from([Closed]));
   expect(NumberSet.from([Closed])).not.toEqual(NumberSet.from([Open]));
   expect(NumberSet.from([Closed, Open])).toEqual(
@@ -384,7 +384,9 @@ test('center', () => {
 
 test('translatedBy', () => {
   expect(Closed.toSet().translatedBy(0)).toEqual(Closed.toSet());
-  expect(Closed.toSet().translatedBy(Infinity)).toEqual(Inf().toSet());
+  expect(Closed.toSet().translatedBy(Infinity)).toEqual(
+    Interval.Point(Infinity).toSet()
+  );
   expect(EmptyCrossed.toSet().translatedBy(1)).toEqual(EmptyCrossed.toSet());
 
   expect(ClosedLower.toSet().translatedBy(1)).toEqual(ClosedUpper.toSet());

@@ -2,7 +2,6 @@ import {
   NumberSet,
   Interval,
   ParseError,
-  Inf,
   Real,
   RealWithInf,
   NonNegative,
@@ -215,7 +214,7 @@ test('fromString', () => {
 
 test('translatedBy', () => {
   expect(Closed.translatedBy(0)).toEqual(Closed);
-  expect(Closed.translatedBy(Infinity)).toEqual(Inf());
+  expect(Closed.translatedBy(Infinity)).toEqual(Interval.Point(Infinity));
   expect(EmptyCrossed.translatedBy(1)).toEqual(EmptyCrossed);
 
   expect(ClosedLower.translatedBy(1)).toEqual(ClosedUpper);
@@ -325,22 +324,23 @@ test('center', () => {
 });
 
 test('infinity & predefined intervals', () => {
-  expect(Inf().toString()).toEqual(`[Infinity,Infinity]`);
+  const Inf = Interval.Point(Infinity);
+  expect(Inf.toString()).toEqual(`[Infinity,Infinity]`);
 
-  expect(Inf().isEmpty()).toBeFalsy();
+  expect(Inf.isEmpty()).toBeFalsy();
   expect(Interval.Closed(Infinity, 0).isEmpty()).toBeTruthy();
 
   expect(Inf).toEqual(Inf);
 
-  expect(Inf().contains(Infinity)).toBeTruthy();
-  expect(Inf().contains(0)).toBeFalsy();
+  expect(Inf.contains(Infinity)).toBeTruthy();
+  expect(Inf.contains(0)).toBeFalsy();
   expect(Real().contains(0)).toBeTruthy();
   expect(Real().contains(Infinity)).toBeFalsy();
   expect(RealWithInf().contains(0)).toBeTruthy();
   expect(RealWithInf().contains(Infinity)).toBeTruthy();
 
-  expect(Inf().union(Inf())).toEqual(NumberSet.from([Inf()]));
-  expect(Inf().union(Closed)).toEqual(NumberSet.from([Inf(), Closed]));
+  expect(Inf.union(Inf)).toEqual(NumberSet.from([Inf]));
+  expect(Inf.union(Closed)).toEqual(NumberSet.from([Inf, Closed]));
   expect(NonNegative().union(NonPositive())).toEqual(NumberSet.from([Real()]));
   expect(NonNegativeWithInf().union(NonPositiveWithNegInf())).toEqual(
     NumberSet.from([RealWithInf()])
@@ -359,7 +359,7 @@ test('infinity & predefined intervals', () => {
   expect(Real().without(Middle)).toEqual(
     NumberSet.from([Negative(), Positive()])
   );
-  expect(NonNegativeWithInf().without(Inf())).toEqual(
+  expect(NonNegativeWithInf().without(Inf)).toEqual(
     NumberSet.from([NonNegative()])
   );
 
