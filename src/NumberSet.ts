@@ -1,6 +1,14 @@
 import { Interval, ParseError } from '.';
 
 /**
+ * @internal
+ */
+enum IntervalState {
+  Sorted,
+  Normalized,
+}
+
+/**
  * A set of numbers represented by the union of disjoint intervals
  *
  * @remarks
@@ -19,7 +27,7 @@ export class NumberSet {
    *
    * @remarks
    * Note that the intervals are stored internally in a "normalized" manner meaning
-   *  - intersecting intervals are merged
+   *  - touching intervals are merged
    *  - empty intervals are omitted
    *  - the intervals are sorted by their lower bound in ascending order
    *
@@ -143,7 +151,6 @@ export class NumberSet {
       .slice(1, -1)
       .split(', ')
       .filter((t) => t.length);
-    // TODO try catch and then throw more specific error
     const intervals: Interval[] = intervalReps.map((rep) =>
       Interval.fromString(rep)
     );
@@ -366,13 +373,114 @@ export class NumberSet {
     */
     return this.union(other).without(this.intersection(other));
   }
-}
+  /**
+   *
+   * @returns The {@link NumberSet}'s interior (all the {@link Interval}s without their endpoints)
+   */
+  interior(): NumberSet {
+    return new NumberSet(
+      this.intervals.map((i) => i.interior()).filter((i) => !i.isEmpty()),
+      IntervalState.Normalized
+    );
+  }
 
-// TODO get rid of doc warning
-/**
- * @internal
- */
-enum IntervalState {
-  Sorted,
-  Normalized,
+  /**
+   *
+   * @returns The {@link NumberSet}'s closure
+   */
+  closure(): NumberSet {
+    return new NumberSet(
+      this.intervals.map((i) => i.closure()),
+      IntervalState.Sorted
+    );
+  }
+
+  /**
+   *
+   * @returns The {@link NumberSet}'s diameter
+   * (supremum of distances between two points in the set, e.g. largest
+   * upper bound minus the smallest lower bound in our case)
+   */
+  diameter(): number {
+    if (this.isEmpty()) {
+      return 0;
+    }
+    return (
+      this.intervals[this.intervals.length - 1].upperBound -
+      this.intervals[0].lowerBound
+    );
+  }
+
+  /**
+   *
+   * @returns The {@link NumberSet}'s radius
+   * (in our case diameter/2)
+   */
+  radius(): number {
+    return this.diameter() / 2.0;
+  }
+
+  /**
+   *
+   * @returns The {@link NumberSet}'s volume
+   * (sum of its {@link Interval}s diameter/length)
+   */
+  volume(): number {
+    if (this.isEmpty()) {
+      return 0;
+    }
+    return this.intervals
+      .map((i) => i.diameter())
+      .reduce((prev, current) => prev + current);
+  }
+
+  /**
+   *
+   * @returns The {@link NumberSet}'s center(centroid) if it exists
+   * and NaN if the {@link NumberSet} is empty
+   */
+  center(): number {
+    if (this.isEmpty()) {
+      return NaN;
+    }
+    return (
+      this.intervals
+        .map((i) => i.upperBound * i.upperBound - i.lowerBound * i.lowerBound)
+        .reduce((prev, current) => prev + current) /
+      (2 * this.volume())
+    );
+  }
+
+  /**
+   *
+   * @param offset - offset to apply to the {@link NumberSet}
+   * @returns The {@link NumberSet} translated by the offset
+   */
+  translatedBy(offset: number): NumberSet {
+    const translatedIntervals = this.intervals.map((i) =>
+      i.translatedBy(offset)
+    );
+    return new NumberSet(translatedIntervals, IntervalState.Normalized);
+  }
+
+  /**
+   *
+   *
+   * @param factor - scale factor
+   * @returns The {@link NumberSet} scaled by the factor
+   * @throws RangeError if factor === Infinity or factor === -Infinity
+   */
+  scaledBy(factor: number): NumberSet {
+    // can't throw implicitly with Interval.scaledBy since we want to throw
+    // even if this set is empty
+    if (factor === -Infinity || factor === Infinity) {
+      throw new RangeError('Scaling by Infinity is not supported.');
+    }
+    const scaledIntervals = this.intervals.map((i) => i.scaledBy(factor));
+    if (factor <= 0) {
+      return new NumberSet(scaledIntervals.reverse(), IntervalState.Sorted);
+    } else {
+      return new NumberSet(scaledIntervals, IntervalState.Normalized);
+    }
+  }
 }

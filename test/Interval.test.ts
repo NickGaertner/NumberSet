@@ -207,69 +207,69 @@ test('fromString', () => {
 
   expect(Interval.fromString(' [ -1 , 1 ] ')).toEqual(Closed);
 
-  expect(() => Interval.fromString('Not an interval')).toThrowError(ParseError);
-  expect(() => Interval.fromString('{0,0}')).toThrowError(ParseError);
-  expect(() => Interval.fromString('[NaN,0]')).toThrowError(ParseError);
-  expect(() => Interval.fromString('[0,NaN]')).toThrowError(ParseError);
+  expect(() => Interval.fromString('Not an interval')).toThrow(ParseError);
+  expect(() => Interval.fromString('{0,0}')).toThrow(ParseError);
+  expect(() => Interval.fromString('[NaN,0]')).toThrow(ParseError);
+  expect(() => Interval.fromString('[0,NaN]')).toThrow(ParseError);
 });
 
-test('translateBy', () => {
-  expect(Closed.translateBy(1)).toEqual(Closed.add(1));
-  expect(Closed.translateBy(0)).toEqual(Closed);
-  expect(Closed.translateBy(Infinity)).toEqual(Inf());
-  expect(EmptyCrossed.translateBy(1)).toEqual(EmptyCrossed);
+test('translatedBy', () => {
+  expect(Closed.translatedBy(0)).toEqual(Closed);
+  expect(Closed.translatedBy(Infinity)).toEqual(Inf());
+  expect(EmptyCrossed.translatedBy(1)).toEqual(EmptyCrossed);
 
-  expect(ClosedLower.translateBy(1)).toEqual(ClosedUpper);
-  expect(ClosedUpper.translateBy(-1)).toEqual(ClosedLower);
+  expect(ClosedLower.translatedBy(1)).toEqual(ClosedUpper);
+  expect(ClosedUpper.translatedBy(-1)).toEqual(ClosedLower);
 
-  expect(OpenLower.translateBy(1)).toEqual(OpenUpper);
-  expect(OpenUpper.translateBy(-1)).toEqual(OpenLower);
+  expect(OpenLower.translatedBy(1)).toEqual(OpenUpper);
+  expect(OpenUpper.translatedBy(-1)).toEqual(OpenLower);
 
-  expect(BottomClosedLower.translateBy(1)).toEqual(BottomClosedUpper);
-  expect(BottomClosedUpper.translateBy(-1)).toEqual(BottomClosedLower);
+  expect(BottomClosedLower.translatedBy(1)).toEqual(BottomClosedUpper);
+  expect(BottomClosedUpper.translatedBy(-1)).toEqual(BottomClosedLower);
 
-  expect(TopClosedLower.translateBy(1)).toEqual(TopClosedUpper);
-  expect(TopClosedUpper.translateBy(-1)).toEqual(TopClosedLower);
+  expect(TopClosedLower.translatedBy(1)).toEqual(TopClosedUpper);
+  expect(TopClosedUpper.translatedBy(-1)).toEqual(TopClosedLower);
 });
 
-test('scaleBy', () => {
-  expect(Closed.scaleBy(2)).toEqual(Closed.multiply(2));
-  expect(ClosedUpper.scaleBy(2)).toEqual(Interval.Closed(0, 2));
-  expect(Closed.scaleBy(1)).toEqual(Closed);
-  expect(Closed.scaleBy(0)).toEqual(Middle);
-  expect(Closed.scaleBy(Infinity)).toEqual(RealWithInf());
-  expect(EmptyCrossed.scaleBy(2)).toEqual(EmptyCrossed);
-  expect(Open.scaleBy(0)).toEqual(EmptyCrossed);
+test('scaledBy', () => {
+  expect(() => Closed.scaledBy(Infinity)).toThrow(RangeError);
+  expect(() => Closed.scaledBy(-Infinity)).toThrow(RangeError);
 
-  expect(ClosedUpper.scaleBy(-1)).toEqual(ClosedLower);
-  expect(OpenUpper.scaleBy(-1)).toEqual(OpenLower);
-  expect(TopClosedUpper.scaleBy(-1)).toEqual(TopClosedLower);
-  expect(BottomClosedUpper.scaleBy(-1)).toEqual(BottomClosedLower);
+  expect(ClosedUpper.scaledBy(2)).toEqual(Interval.Closed(0, 2));
+  expect(Closed.scaledBy(1)).toEqual(Closed);
+  expect(Closed.scaledBy(0)).toEqual(Middle);
+  expect(EmptyCrossed.scaledBy(2)).toEqual(EmptyCrossed);
+  expect(Open.scaledBy(0)).toEqual(EmptyCrossed);
 
-  expect(ClosedLower.scaleBy(-1)).toEqual(ClosedUpper);
-  expect(OpenLower.scaleBy(-1)).toEqual(OpenUpper);
-  expect(TopClosedLower.scaleBy(-1)).toEqual(TopClosedUpper);
-  expect(BottomClosedLower.scaleBy(-1)).toEqual(BottomClosedUpper);
+  expect(ClosedUpper.scaledBy(-1)).toEqual(ClosedLower);
+  expect(OpenUpper.scaledBy(-1)).toEqual(OpenLower);
+  expect(TopClosedUpper.scaledBy(-1)).toEqual(TopClosedLower);
+  expect(BottomClosedUpper.scaledBy(-1)).toEqual(BottomClosedLower);
 
-  expect(Interval.Closed(-0.5, 0.5).scaleBy(2)).toEqual(Closed);
-  expect(Interval.Open(-0.5, 0.5).scaleBy(2)).toEqual(Open);
-  expect(Interval.BottomClosed(-0.5, 0.5).scaleBy(2)).toEqual(BottomClosed);
-  expect(Interval.TopClosed(-0.5, 0.5).scaleBy(2)).toEqual(TopClosed);
+  expect(ClosedLower.scaledBy(-1)).toEqual(ClosedUpper);
+  expect(OpenLower.scaledBy(-1)).toEqual(OpenUpper);
+  expect(TopClosedLower.scaledBy(-1)).toEqual(TopClosedUpper);
+  expect(BottomClosedLower.scaledBy(-1)).toEqual(BottomClosedUpper);
 
-  expect(Interval.Closed(-0.5, 0.5).scaleBy(-2)).toEqual(Closed);
-  expect(Interval.Open(-0.5, 0.5).scaleBy(-2)).toEqual(Open);
-  expect(Interval.BottomClosed(-0.5, 0.5).scaleBy(-2)).toEqual(BottomClosed);
-  expect(Interval.TopClosed(-0.5, 0.5).scaleBy(-2)).toEqual(TopClosed);
+  expect(Interval.Closed(-0.5, 0.5).scaledBy(2)).toEqual(Closed);
+  expect(Interval.Open(-0.5, 0.5).scaledBy(2)).toEqual(Open);
+  expect(Interval.BottomClosed(-0.5, 0.5).scaledBy(2)).toEqual(BottomClosed);
+  expect(Interval.TopClosed(-0.5, 0.5).scaledBy(2)).toEqual(TopClosed);
 
-  expect(Closed.scaleBy(0.5)).toEqual(Interval.Closed(-0.5, 0.5));
-  expect(Open.scaleBy(0.5)).toEqual(Interval.Open(-0.5, 0.5));
-  expect(BottomClosed.scaleBy(0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
-  expect(TopClosed.scaleBy(0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
+  expect(Interval.Closed(-0.5, 0.5).scaledBy(-2)).toEqual(Closed);
+  expect(Interval.Open(-0.5, 0.5).scaledBy(-2)).toEqual(Open);
+  expect(Interval.BottomClosed(-0.5, 0.5).scaledBy(-2)).toEqual(BottomClosed);
+  expect(Interval.TopClosed(-0.5, 0.5).scaledBy(-2)).toEqual(TopClosed);
 
-  expect(Closed.scaleBy(-0.5)).toEqual(Interval.Closed(-0.5, 0.5));
-  expect(Open.scaleBy(-0.5)).toEqual(Interval.Open(-0.5, 0.5));
-  expect(BottomClosed.scaleBy(-0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
-  expect(TopClosed.scaleBy(-0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
+  expect(Closed.scaledBy(0.5)).toEqual(Interval.Closed(-0.5, 0.5));
+  expect(Open.scaledBy(0.5)).toEqual(Interval.Open(-0.5, 0.5));
+  expect(BottomClosed.scaledBy(0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
+  expect(TopClosed.scaledBy(0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
+
+  expect(Closed.scaledBy(-0.5)).toEqual(Interval.Closed(-0.5, 0.5));
+  expect(Open.scaledBy(-0.5)).toEqual(Interval.Open(-0.5, 0.5));
+  expect(BottomClosed.scaledBy(-0.5)).toEqual(Interval.BottomClosed(-0.5, 0.5));
+  expect(TopClosed.scaledBy(-0.5)).toEqual(Interval.TopClosed(-0.5, 0.5));
 });
 
 test('interior', () => {
@@ -320,6 +320,8 @@ test('center', () => {
   expect(BottomClosed.center()).toEqual(0);
   expect(Open.center()).toEqual(0);
   expect(EmptyCrossed.center()).toEqual(NaN);
+  expect(Interval.Open(-1, 2).center()).toEqual(0.5);
+  expect(Interval.Open(-2, 1).center()).toEqual(-0.5);
 });
 
 test('infinity & predefined intervals', () => {

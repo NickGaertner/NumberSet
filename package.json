@@ -47,8 +47,8 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
-    "docs:html": "typedoc --plugin none --tsconfig tsconfig.base.json src/index.ts",
-    "docs:md": "typedoc --plugin typedoc-plugin-markdown --tsconfig tsconfig.base.json src/index.ts",
+    "docs:html": "typedoc --plugin none --tsconfig tsconfig.base.json --excludeInternal src/index.ts",
+    "docs:md": "typedoc --plugin typedoc-plugin-markdown --tsconfig tsconfig.base.json --excludeInternal src/index.ts",
     "pack": "npm pack",
     "prepack": "npm run build:all",
     "prepare": "husky install"

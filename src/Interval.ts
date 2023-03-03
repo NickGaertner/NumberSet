@@ -433,7 +433,7 @@ export class Interval {
    * @param offset - offset to apply to the {@link Interval}
    * @returns The {@link Interval} translated by the offset
    */
-  translateBy(offset: number): Interval {
+  translatedBy(offset: number): Interval {
     return new Interval({
       lowerBound: this.lowerBound + offset,
       upperBound: this.upperBound + offset,
@@ -444,16 +444,6 @@ export class Interval {
   }
 
   /**
-   * Alias for ${@link Interval.translateBy}
-   *
-   * @param offset -
-   * @returns
-   */
-  add(offset: number): Interval {
-    return this.translateBy(offset);
-  }
-
-  /**
    *
    * @example
    * ``` ts
@@ -461,9 +451,14 @@ export class Interval {
    * ```
    *
    * @param factor - scale factor
-   * @returns The {@link Interval} scaled by factor
+   * @returns The {@link Interval} scaled by the factor
+   * @throws RangeError if factor === Infinity or factor === -Infinity
+   *
    */
-  scaleBy(factor: number): Interval {
+  scaledBy(factor: number): Interval {
+    if (factor === -Infinity || factor === Infinity) {
+      throw new RangeError('Scaling by Infinity is not supported.');
+    }
     const [lowerBound, upperBound] =
       0 <= factor
         ? [this.lowerBound * factor, this.upperBound * factor]
@@ -475,16 +470,6 @@ export class Interval {
       upperBoundIncluded: this.upperBoundIncluded,
       numberTransform: this.numberTransform,
     });
-  }
-
-  /**
-   * Alias for ${@link Interval.scaleBy}
-   *
-   * @param factor -
-   * @returns
-   */
-  multiply(factor: number): Interval {
-    return this.scaleBy(factor);
   }
 
   /* Aliases for constructing new intervals*/
