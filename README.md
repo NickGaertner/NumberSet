@@ -30,7 +30,6 @@ npm install numberset
 #### Interval
 
 ```ts
-// creating intervals
 const unitIntervalExplicit = new Interval({
   lowerBound: 0,
   upperBound: 1,
@@ -42,12 +41,10 @@ const unitIntervalFromString = Interval.fromString('[0,1]');
 unitIntervalExplicit.equals(unitIntervalFromAlias); // true
 unitIntervalExplicit.equals(unitIntervalFromString); // true
 
-// checking intervals
 unitIntervalExplicit.intersects(Interval.BottomClosed(1, 2)); // true
 unitIntervalExplicit.touches(Interval.Open(1, 2)); // true
 unitIntervalExplicit.contains(0.5); // true
 
-// transforming intervals
 const unitInterval = Interval.Closed(0, 1);
 unitInterval.translatedBy(1); // [1,2]
 unitInterval.scaledBy(2); // [0,2]
@@ -62,7 +59,6 @@ unitInterval.symDiff(unitInterval.scaledBy(-1)); // {[-1,0), (0,1]}
 #### NumberSet
 
 ```ts
-// creating sets
 const set = NumberSet.from([
   Interval.Closed(2, 3),
   Interval.Open(0, 1),
@@ -72,7 +68,6 @@ const setFromString = NumberSet.fromString('{(0,1], [2,3]}');
 set.equals(setFromString); // true
 set.contains(1); // true
 
-// transforming sets
 const indices = [0, 1, 2, 3];
 const fullSet = NumberSet.from(indices.map((p) => Interval.Closed(p, p + 1))); // {[0,4]}
 const points = NumberSet.from(indices.map((p) => Interval.Point(p))); // {[0,0], [1,1], [2,2], [3,3]}
