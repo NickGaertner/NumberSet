@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "numberset",
-  "version": "0.0.0-alpha.0",
+  "version": "1.0.0",
   "description": "Small library to perform set operations on number sets",
   "keywords": [
     "numberset",
