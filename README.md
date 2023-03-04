@@ -2,19 +2,19 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/NickGaertner/NumberSet)
 ![npm](https://img.shields.io/npm/v/numberset)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NickGaertner/NumberSet/test.yml)
-![Coverage](https://github.com/NickGaertner/NumberSet/badges/coverage-jest%20coverage.svg)
-![GitHub](https://img.shields.io/github/license/NickGaertner/NumberSet)
+[![Test](https://img.shields.io/github/actions/workflow/status/NickGaertner/NumberSet/test.yml?label=test)](https://github.com/NickGaertner/NumberSet/actions/workflows/test.yml)
+![Coverage](https://img.shields.io/codeclimate/coverage/NickGaertner/NumberSet)
+![License](https://img.shields.io/github/license/NickGaertner/NumberSet?color=success)
 
 A small library to handle intervals and sets that can be represented by a finite amount of intervals.
 
 **NumberSet** provides two immutable classes -
-[NumberSet](https://nickgaertner.github.io/numberset/classes/NumberSet.html) and
-[Interval](https://nickgaertner.github.io/numberset/classes/Interval.html) -
+[NumberSet](https://nickgaertner.github.io/NumberSet/classes/NumberSet.html) and
+[Interval](https://nickgaertner.github.io/NumberSet/classes/Interval.html) -
 capable of common arithmetic and set operations.
 The library supports closed, open and half-open intervals (bounded and unbounded) and sets build out of them. Both intervals and sets can be constructed from string representations.
 See the
-[documentation](https://nickgaertner.github.io/numberset)
+[documentation](https://nickgaertner.github.io/NumberSet/)
 for more details.
 
 _If you need to query large sets that are changing all the time and you find this library lacking, consider using [interval trees](https://www.npmjs.com/search?q=interval%20tree&ranking=optimal) instead._
@@ -85,5 +85,5 @@ points.translatedBy(-2); // {[-2,-2], [-1,-1], [0,0], [1,1]}
 ```
 
 _See the
-[documentation](https://nickgaertner.github.io/numberset)
+[documentation](https://nickgaertner.github.io/NumberSet/)
 for further information._

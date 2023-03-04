@@ -14,5 +14,9 @@ jobs:
       - uses: actions/setup-node@v3.6.0
       - run: npm install
       - run: npm run test
-      # - uses: jpb06/jest-badges-action@latest
       - run: npm run lint
+      - uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: 666b520e0d7f06e0b5fadaa77f1c3109aa88a9ba6f646ac3eaab8313a2b0ea16
+        with:
+          coverageLocations: ${{github.workspace}}/coverage/lcov.info:lcov
