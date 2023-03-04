@@ -1,6 +1,6 @@
 /**
- * A small library to perform set operations on number sets
- * that can be represented by a finite amount of intervals.
+ * A small library to handle intervals and sets that can be
+ * represented by a finite amount of intervals.
  *
  * @packageDocumentation
  */

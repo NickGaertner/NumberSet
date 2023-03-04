@@ -3,20 +3,19 @@ import { Empty, NumberSet } from '.';
 export type NumberTransform = (x: number) => number;
 const numberId: NumberTransform = (x) => x;
 /**
- * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}
+ * A connected set represented by its endpoints {@link lowerBound} and {@link upperBound}.
  *
  * @remarks
- * Supports the most common set operations and can be constructed from a string.<br>
- * Consider using the aliases described down below instead of the constructor for convenience.
+ * Consider using the aliases described down below instead of specifying bound inclusion by hand.
  *
  * Some common intervals are already defined like {@link Real} and {@link NonNegative}.
  *
  * All intervals can be constructed with a {@link NumberTransform} that can be used to
- * - include sanity checks, like `Number.isSafeInteger(x)` (think of them as type constraints)
+ * - include sanity checks like `Number.isSafeInteger(x)` (think of them as type constraints)
  * - actually transform the bounds, for example clamping the values to nonnegative numbers
  *
  * The {@link NumberTransform} is propagated by all functions returning {@link Interval} or {@link NumberSet}
- * using the {@link NumberTransform} from the __called__ {@link Interval}
+ * using the {@link NumberTransform} from the __called__ {@link Interval}.
  *  - _Note: If your {@link NumberTransform} throws then all functions that use it can throw as well!_
  *  - _Note: The {@link NumberTransform} should be idempotent!_
  *
@@ -35,9 +34,6 @@ export class Interval {
   readonly numberTransform: NumberTransform;
 
   /**
-   *
-   * @remarks
-   * Consider using the aliases {@link Closed}, {@link BottomClosed}, {@link TopClosed}, {@link Open} and {@link Point} instead for convenience
    *
    * @param lowerBound - The {@link Interval}'s lower endpoint
    * @param upperBound - The {@link Interval}'s upper endpoint

@@ -12,7 +12,6 @@ enum IntervalState {
  * A set of numbers represented by the union of disjoint intervals
  *
  * @remarks
- * Supports the most common set operations
  *
  * - _Note: Most functions use {@link Interval} functions internally.
  * It's advised that all provided {@link Interval}s use the same
@@ -29,7 +28,7 @@ export class NumberSet {
    * Note that the intervals are stored internally in a "normalized" manner meaning
    *  - touching intervals are merged
    *  - empty intervals are omitted
-   *  - the intervals are sorted by their lower bound in ascending order
+   *  - the intervals are sorted by their lower bound in ascending order (included bounds have precedence)
    *
    * @param intervals - Intervals representing this set
    */
