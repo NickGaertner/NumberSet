@@ -4,7 +4,7 @@
 ![npm](https://img.shields.io/npm/v/numberset)
 [![Test](https://img.shields.io/github/actions/workflow/status/NickGaertner/NumberSet/test.yml?label=test)](https://github.com/NickGaertner/NumberSet/actions/workflows/test.yml)
 ![Coverage](https://img.shields.io/codeclimate/coverage/NickGaertner/NumberSet)
-![GitHub](https://img.shields.io/github/license/NickGaertner/NumberSet)
+![License](https://img.shields.io/github/license/NickGaertner/NumberSet?color=success)
 
 A small library to handle intervals and sets that can be represented by a finite amount of intervals.
 
