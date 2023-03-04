@@ -10,7 +10,7 @@
     "interval",
     "math"
   ],
-  "homepage": "https://github.com/NickGaertner/NumberSet#readme",
+  "homepage": "https://nickgaertner.github.io/NumberSet/",
   "repository": {
     "type": "git",
     "url": "https://github.com/NickGaertner/NumberSet.git"
@@ -111,9 +111,9 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "coverageReporters": [
+      "lcov",
       "clover",
       "json",
-      "lcov",
       "text",
       "json-summary"
     ]
