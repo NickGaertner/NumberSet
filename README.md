@@ -3,7 +3,7 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/NickGaertner/NumberSet)
 ![npm](https://img.shields.io/npm/v/numberset)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NickGaertner/NumberSet/test.yml)
-![Coverage](https://github.com/NickGaertner/NumberSet/badges/coverage-jest%20coverage.svg)
+![Coverage](https://img.shields.io/codeclimate/coverage/NickGaertner/NumberSet)
 ![GitHub](https://img.shields.io/github/license/NickGaertner/NumberSet)
 
 A small library to handle intervals and sets that can be represented by a finite amount of intervals.
